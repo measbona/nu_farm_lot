@@ -1,4 +1,4 @@
-# nu_farm_lot
+# NU Farm LoT
 
 # How to build NU Farm LoT
 # For IOS
