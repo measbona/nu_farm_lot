@@ -12,4 +12,7 @@
 # For Android
 + Download & Install Android Studio
 + Open Emulator in Android Studio
-+ Inside Terminal, Run `npm run build-android-debug`
++ Inside Terminal, Run
+  ```sh 
+  npm run build-android-debug
+  ```
