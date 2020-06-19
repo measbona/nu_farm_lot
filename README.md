@@ -13,3 +13,8 @@
 + Download & Install Android Studio
 + Open Emulator in Android Studio
 + Open Terminal and Run `npm run build-android-debug`
+
+
+# Requirement Development
++ Visual Studio Code Editor
++ Install Extensions `Babel Javascript`, `Prettier - Code Formartter`, `Javascript ES6 Code Snippets`, `Eslint`
