@@ -5,7 +5,7 @@
 + Download & Install Xcode 
 + Inside Terminal, Run 
   ```sh 
-    npm run open-ios
+  npm run open-ios
   ```
 + Double Click on `nu_farm_lot.xcworkspace`
 + Crt + B ( Build Debug )
