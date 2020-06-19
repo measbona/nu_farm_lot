@@ -1,6 +1,8 @@
 # NU Farm LoT
  **NU Farm LoT** is and innovation project that us internet to enable comunication between agriculture machines and the farm itself.  
+ 
   We aim to help farmer with the power of internet by making the farm and machines work automatically by themselvs.  
+  
   We believe in a worl where people will do less work and machines will work by themselvs.
 # For IOS
 + Download & Install Xcode 
