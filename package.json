@@ -5,18 +5,17 @@
   "scripts": {
     "build-android-debug": "cd ./android && ./gradlew clean && cd .. && npx jetifier && cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "build-ios-debug": "react-native run-ios",
-
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
     "clean": "npm install && cd ios && pod install && cd ..",
-
     "open-ios": "cd ios && open . && cd .."
   },
   "dependencies": {
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-navigation": "^6.7.5"
+    "react-native-navigation": "^6.7.5",
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
