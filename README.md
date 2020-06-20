@@ -15,6 +15,6 @@
 + Open Terminal and Run `npm run build-android-debug`
 
 
-# Requirement Tools For Development
+# Requirement For Development Tool Kit
 + Visual Studio Code Editor
 + Install Extensions `Babel Javascript`, `Prettier - Code Formartter`, `Javascript ES6 Code Snippets`, `Eslint`
