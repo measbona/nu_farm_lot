@@ -8,6 +8,8 @@ export const Screens = new Map();
 
 Screens.set(DASHBOARD, Dashboard);
 
+export const popBack = componentId => Navigation.pop(componentId);
+
 export const goToDashboard = () => {
   Navigation.setRoot({
     root: {

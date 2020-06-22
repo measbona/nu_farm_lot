@@ -8,10 +8,22 @@ export const registerScreen = () => {
   );
 };
 
+export const setDefaultNavigation = () => {
+  Navigation.setDefaultOptions({
+    topBar: {
+      visible: false,
+      drawBehind: true,
+      animate: false,
+    },
+  });
+};
+
 export const startApp = () => {
   registerScreen();
 
   Navigation.events().registerAppLaunchedListener(() => {
+    setDefaultNavigation();
+
     goToDashboard();
   });
 };
