@@ -1,19 +1,3 @@
-import {Navigation} from 'react-native-navigation';
-import Dashboard from './src/Dashboard';
+import {startApp} from './src/Navigation/index';
 
-Navigation.registerComponent('com.myApp.WelcomeScreen', () => Dashboard);
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'com.myApp.WelcomeScreen',
-            },
-          },
-        ],
-      },
-    },
-  });
-});
+startApp();
