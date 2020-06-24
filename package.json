@@ -8,14 +8,14 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "clean": "npm install && cd ios && pod install && cd ..",
-    "open-ios": "cd ios && open . && cd .."
+    "clean": "npm install && cd ios && pod install && cd .."
   },
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "react-native": "0.62.2",
+    "react-native-device-info": "^5.6.1",
     "react-native-navigation": "^6.7.5",
     "react-native-vector-icons": "^6.6.0",
     "styled-components": "^5.1.1"

@@ -1,3 +1,3 @@
-import {startApp} from './src/Navigation/index';
+import {startApp} from './src/navigation/index';
 
 startApp();
