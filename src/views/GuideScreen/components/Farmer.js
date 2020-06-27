@@ -14,12 +14,12 @@ const ProfileWrapper = styled.View`
 `;
 
 const TopTextWrapper = styled.View`
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 `;
 
 const Profile = styled.Image``;
 
-const BottomTexttWrapper = styled.View`
+const TexttWrapper = styled.View`
   align-items: center;
   position: absolute;
   padding-vertical: 40px;
@@ -67,10 +67,10 @@ export default class Farmer extends React.PureComponent {
             />
           </ImageWrapper>
         </ProfileAndImageWrapper>
-        <BottomTexttWrapper>
+        <TexttWrapper>
           <Text size={23}>Welcome to NU Farm LoT</Text>
           <Text size={18}>Enhance farmer with technology</Text>
-        </BottomTexttWrapper>
+        </TexttWrapper>
       </Wrapper>
     );
   }

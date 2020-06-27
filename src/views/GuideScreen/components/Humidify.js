@@ -53,11 +53,15 @@ export default class Humidify extends React.PureComponent {
               source={require('../../../assets/images/WaterCup/WaterCup.png')}
             />
             <Divider />
-            <Image source={require('../../../assets/images/Water/Water.png')} />
+            <Image
+              source={require('../../../assets/images/DropWater/DropWater.png')}
+            />
           </MultipleImageWrapper>
         </ImageWrapper>
         <BottomTexttWrapper>
-          <Text size={23} weightFont>Detect your farm's humidify,</Text>
+          <Text size={23} weightFont>
+            Detect your farm's humidify,
+          </Text>
           <Text size={23}>temperature and flood</Text>
           <Space />
           <Text size={18}>In just a few simple steps</Text>

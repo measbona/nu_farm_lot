@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 
+import {goToSelectFarm} from '../../../navigation/screen';
+
 const Wrapper = styled.View`
   flex: 1;
   align-items: center;
@@ -51,18 +53,21 @@ export default class SmartAlert extends React.PureComponent {
       <Wrapper>
         <ImageWrapper>
           <Image
-            source={require('../../../assets/images/SmartAlert/SmartAlert.png')}
+            source={require('../../../assets/images/PowerfulSensor/PowerfulSensor.png')}
           />
         </ImageWrapper>
         <BottomTexttWrapper>
-          <Text size={23} weightFont>Smart Alert</Text>
+          <Text size={23} weightFont>
+            Smart Alert
+          </Text>
           <Divider />
           <Text size={18}>Powerful sensor that can inform you</Text>
           <Text size={18}>all you need to know about your farm</Text>
         </BottomTexttWrapper>
         <StartButton
           activeOpacity={0.5}
-          hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}>
+          hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+          onPress={() => goToSelectFarm(this.props.componentId)}>
           <Text size={23}>Get Started</Text>
           <MDIcons name="keyboard-arrow-right" size={35} />
         </StartButton>
