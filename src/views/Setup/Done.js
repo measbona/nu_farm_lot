@@ -4,6 +4,8 @@ import * as Animatable from 'react-native-animatable';
 
 import utils from '../../utils';
 
+import {goToDashboard} from '../../navigation/screen';
+
 const Wrapper = styled.View`
   flex: 1;
   align-items: center;
@@ -54,7 +56,7 @@ export default class Done extends React.PureComponent {
         <StartButton
           activeOpacity={0.5}
           hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-          onPress={() => alert('Dashboard')}>
+          onPress={() => goToDashboard()}>
           <ButtonText size={23}>Done</ButtonText>
         </StartButton>
       </Wrapper>

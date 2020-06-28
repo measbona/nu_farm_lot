@@ -1,3 +1,4 @@
 import colors from './colors';
+import shadows from './shadows';
 
-export default {colors};
+export default {colors, shadows};

@@ -1,6 +1,6 @@
 import {Navigation} from 'react-native-navigation';
+import utils from '../utils';
 
-import Dashboard from '../views/Dashboard';
 import GuideScreen from '../views/GuideScreen';
 
 import SelectFarm from '../views/Setup/SelectFarm';
@@ -11,7 +11,8 @@ import Water from '../views/Setup/Water';
 import SmartAlert from '../views/Setup/SmartAlert';
 import Done from '../views/Setup/Done';
 
-export const DASHBOARD = 'Nu.Dashboard';
+import Dashboard from '../views/Dashboard';
+
 export const GUIDESCREEN = 'Nu.GuideScreen';
 
 export const SELECT_FARM = 'Nu.SelectFarm';
@@ -22,9 +23,10 @@ export const WATER = 'Nu.Water';
 export const SMART_ALERT = 'Nu.SmartAlert';
 export const DONE = 'Nu.Done';
 
+export const DASHBOARD = 'Nu.Dashboard';
+
 export const Screens = new Map();
 
-Screens.set(DASHBOARD, Dashboard);
 Screens.set(GUIDESCREEN, GuideScreen);
 
 Screens.set(SELECT_FARM, SelectFarm);
@@ -34,6 +36,8 @@ Screens.set(WATER_SCHEDULE, WaterSchedule);
 Screens.set(WATER, Water);
 Screens.set(SMART_ALERT, SmartAlert);
 Screens.set(DONE, Done);
+
+Screens.set(DASHBOARD, Dashboard);
 
 export const popBack = componentId => Navigation.pop(componentId);
 
@@ -105,6 +109,28 @@ export const goToDone = componentId => {
   Navigation.push(componentId, {
     component: {
       name: DONE,
+    },
+  });
+};
+
+export const goToDashboard = () => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: DASHBOARD,
+              options: {
+                layout: {
+                  backgroundColor: `${utils.colors.veryLightGray}`,
+                  componentBackgroundColor: `${utils.colors.veryLightGray}`,
+                },
+              },
+            },
+          },
+        ],
+      },
     },
   });
 };
