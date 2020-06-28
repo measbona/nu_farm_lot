@@ -19,7 +19,7 @@ const BottomTexttWrapper = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
   padding: 2px 0px 2px 0px;
 `;

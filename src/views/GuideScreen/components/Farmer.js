@@ -27,7 +27,7 @@ const TexttWrapper = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 

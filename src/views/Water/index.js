@@ -22,7 +22,7 @@ const LabelWrapper = styled.View`
 
 const Label = styled.Text`
   color: ${utils.colors.blue};
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
   padding-bottom: 10px;
 `;
@@ -40,7 +40,7 @@ const MDIcons = styled(MDIcon)`
 `;
 
 const ButtonText = styled.Text`
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
   padding: 2px 0px 2px 0px;
 `;

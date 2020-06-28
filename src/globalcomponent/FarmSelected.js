@@ -19,7 +19,7 @@ const Buttonwrapper = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   position: absolute;
   left: 35px;
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
   color: ${utils.colors.grey};
   padding: 2px 0px 2px 0px;
