@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Animatable from 'react-native-animatable';
 
-import FarmSelected from '../../globalcomponent/FarmSelected';
-
-import {goToSensor} from '../../navigation/screen';
+import utils from '../../utils';
 
 const Wrapper = styled.View`
   flex: 1;
@@ -14,26 +12,25 @@ const Wrapper = styled.View`
 
 const Image = styled.Image``;
 
+const AnimateImage = Animatable.createAnimatableComponent(Image);
+
 const LabelWrapper = styled.View`
+  align-items: center;
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 `;
 
 const Label = styled.Text`
+  color: ${utils.colors.blue};
   font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
+  padding-bottom: 10px;
 `;
 
-const NextButton = styled.TouchableOpacity`
-  flex-direction: row;
+const StartButton = styled.TouchableOpacity`
   position: absolute;
   justify-content: center;
   bottom: 90px;
-`;
-
-const MDIcons = styled(MDIcon)`
-  position: absolute;
-  left: 50px;
 `;
 
 const ButtonText = styled.Text`
@@ -42,22 +39,24 @@ const ButtonText = styled.Text`
   padding: 2px 0px 2px 0px;
 `;
 
-export default class FarmSize extends React.PureComponent {
+export default class Done extends React.PureComponent {
   render() {
     return (
       <Wrapper>
-        <Image source={require('../../assets/images/Box/Box.png')} />
+        <AnimateImage
+          source={require('../../assets/images/Done/Done.png')}
+          animation="bounceIn"
+          iterationDelay={1000}
+        />
         <LabelWrapper>
-          <Label size={23}>How big is your farm?</Label>
+          <Label size={20}>Your're good to go</Label>
         </LabelWrapper>
-        <FarmSelected />
-        <NextButton
+        <StartButton
           activeOpacity={0.5}
           hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-          onPress={() => goToSensor(this.props.componentId)}>
-          <ButtonText size={23}>Next</ButtonText>
-          <MDIcons name="keyboard-arrow-right" size={35} />
-        </NextButton>
+          onPress={() => alert('Dashboard')}>
+          <ButtonText size={23}>Done</ButtonText>
+        </StartButton>
       </Wrapper>
     );
   }

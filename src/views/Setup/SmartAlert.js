@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Animatable from 'react-native-animatable';
 
-import utils from '../../utils';
+import FarmSelected from '../../globalcomponent/FarmSelected';
 
-import {goToSmartAlert} from '../../navigation/screen';
+import {goToDone} from '../../navigation/screen';
 
 const Wrapper = styled.View`
   flex: 1;
@@ -14,17 +15,16 @@ const Wrapper = styled.View`
 
 const Image = styled.Image``;
 
+const AnimateImage = Animatable.createAnimatableComponent(Image);
+
 const LabelWrapper = styled.View`
-  align-items: center;
   padding-top: 50px;
-  padding-bottom: 40px;
+  padding-bottom: 50px;
 `;
 
 const Label = styled.Text`
-  color: ${utils.colors.blue};
   font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
-  padding-bottom: 10px;
 `;
 
 const StartButton = styled.TouchableOpacity`
@@ -45,19 +45,24 @@ const ButtonText = styled.Text`
   padding: 2px 0px 2px 0px;
 `;
 
-export default class SelectFarm extends React.PureComponent {
+export default class SmartAlert extends React.PureComponent {
   render() {
     return (
       <Wrapper>
-        <Image source={require('../../assets/images/Water/Water.png')} />
+        <AnimateImage
+          source={require('../../assets/images/SmartAlert/SmartAlert.png')}
+          animation="swing"
+          iterationCount="infinite"
+          iterationDelay={1000}
+        />
         <LabelWrapper>
-          <Label size={19}>You will spend 8 liters water for 24 hours</Label>
-          <Label size={16}>amount of water can be changed of schedule</Label>
+          <Label size={23}>Set up smart alert</Label>
         </LabelWrapper>
+        <FarmSelected />
         <StartButton
           activeOpacity={0.5}
           hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-          onPress={() => goToSmartAlert(this.props.componentId)}>
+          onPress={() => goToDone(this.props.componentId)}>
           <ButtonText size={23}>Next</ButtonText>
           <MDIcons name="keyboard-arrow-right" size={35} />
         </StartButton>

@@ -3,13 +3,13 @@ import {Navigation} from 'react-native-navigation';
 import Dashboard from '../views/Dashboard';
 import GuideScreen from '../views/GuideScreen';
 
-import SelectFarm from '../views/SelectFarm';
-import FarmSize from '../views/FarmSize';
-import Sensor from '../views/Sensor';
-import WaterSchedule from '../views/WaterSchedule';
-import Water from '../views/Water';
-import SmartAlert from '../views/SmartAlert';
-import Done from '../views/Done';
+import SelectFarm from '../views/Setup/SelectFarm';
+import FarmSize from '../views/Setup/FarmSize';
+import Sensor from '../views/Setup/Sensor';
+import WaterSchedule from '../views/Setup/WaterSchedule';
+import Water from '../views/Setup/Water';
+import SmartAlert from '../views/Setup/SmartAlert';
+import Done from '../views/Setup/Done';
 
 export const DASHBOARD = 'Nu.Dashboard';
 export const GUIDESCREEN = 'Nu.GuideScreen';

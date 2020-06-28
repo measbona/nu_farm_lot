@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import * as Animatable from 'react-native-animatable';
+
 import utils from '../../../utils';
 
 const Wrapper = styled.View`
@@ -8,6 +10,8 @@ const Wrapper = styled.View`
   justify-content: center;
   position: relative;
 `;
+
+const Animation = Animatable.createAnimatableComponent(Wrapper);
 
 const ProfileWrapper = styled.View`
   padding-bottom: 10px;
@@ -49,7 +53,7 @@ const ProfileAndImageWrapper = styled.View`
 export default class Farmer extends React.PureComponent {
   render() {
     return (
-      <Wrapper>
+      <Animation animation="fadeIn">
         <ProfileAndImageWrapper>
           <ProfileWrapper>
             <Profile
@@ -71,7 +75,7 @@ export default class Farmer extends React.PureComponent {
           <Text size={23}>Welcome to NU Farm LoT</Text>
           <Text size={18}>Enhance farmer with technology</Text>
         </TexttWrapper>
-      </Wrapper>
+      </Animation>
     );
   }
 }

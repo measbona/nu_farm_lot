@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Animatable from 'react-native-animatable';
 
 import FarmSelected from '../../globalcomponent/FarmSelected';
 
-import {goToDone} from '../../navigation/screen';
+import {goToSensor} from '../../navigation/screen';
 
 const Wrapper = styled.View`
   flex: 1;
@@ -13,6 +14,8 @@ const Wrapper = styled.View`
 `;
 
 const Image = styled.Image``;
+
+const AnimateImage = Animatable.createAnimatableComponent(Image);
 
 const LabelWrapper = styled.View`
   padding-top: 50px;
@@ -24,7 +27,7 @@ const Label = styled.Text`
   font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 
-const StartButton = styled.TouchableOpacity`
+const NextButton = styled.TouchableOpacity`
   flex-direction: row;
   position: absolute;
   justify-content: center;
@@ -42,24 +45,25 @@ const ButtonText = styled.Text`
   padding: 2px 0px 2px 0px;
 `;
 
-export default class SmartAlert extends React.PureComponent {
+export default class FarmSize extends React.PureComponent {
   render() {
     return (
       <Wrapper>
-        <Image
-          source={require('../../assets/images/SmartAlert/SmartAlert.png')}
+        <AnimateImage
+          source={require('../../assets/images/Box/Box.png')}
+          animation="zoomIn"
         />
         <LabelWrapper>
-          <Label size={23}>Set up smart alert</Label>
+          <Label size={23}>How big is your farm?</Label>
         </LabelWrapper>
         <FarmSelected />
-        <StartButton
+        <NextButton
           activeOpacity={0.5}
           hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-          onPress={() => goToDone(this.props.componentId)}>
+          onPress={() => goToSensor(this.props.componentId)}>
           <ButtonText size={23}>Next</ButtonText>
           <MDIcons name="keyboard-arrow-right" size={35} />
-        </StartButton>
+        </NextButton>
       </Wrapper>
     );
   }
