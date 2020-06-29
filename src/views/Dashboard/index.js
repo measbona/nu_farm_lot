@@ -7,9 +7,11 @@ import utils from '../../utils';
 
 import Header from './components/Header';
 import CropCard from './components/CropCard';
+import BottomTab from './components/BottomTab';
 
 const Wrapper = styled.View`
   flex: 1;
+  justify-content: space-between;
 `;
 
 const DashboardAnimate = Animatable.createAnimatableComponent(Wrapper);
@@ -85,6 +87,7 @@ export default class Dashboard extends React.Component {
           renderItem={this.renderCrop}
           keyExtractor={item => item.id}
         />
+        <BottomTab />
       </DashboardAnimate>
     );
   }

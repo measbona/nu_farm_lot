@@ -5,9 +5,14 @@ const colors = {
   grey: '#ACACAC',
   blue: '#007AFF',
   green: '#57B33B',
+  sky: '#37c8c8',
+  carrot: '#f98b02',
+  yellow: '#FFF700',
 
   lightGreen: '#D1DDBE',
   lightBlue: '#00C8C8',
+  lightSky: '#b2eeee',
+  lightCarrot: '#fcdbb0',
 
   darkBlue: '#00BCD4',
   darkGreen: '#678242',
