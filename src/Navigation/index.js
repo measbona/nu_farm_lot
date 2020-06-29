@@ -1,6 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 
-import {goToDashboard, guideScreen, Screens} from './screen';
+import {setRootHome, Screens} from './screen';
 
 export const registerScreen = () => {
   Screens.forEach((ScreenComponent, key) =>
@@ -24,6 +24,6 @@ export const startApp = () => {
   Navigation.events().registerAppLaunchedListener(() => {
     setDefaultNavigation();
 
-    goToDashboard();
+    setRootHome();
   });
 };

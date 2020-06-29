@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import * as Animatable from 'react-native-animatable';
+
 import utils from '../../../utils';
 
 const Wrapper = styled.View`
@@ -9,17 +11,19 @@ const Wrapper = styled.View`
   position: relative;
 `;
 
+const Animation = Animatable.createAnimatableComponent(Wrapper);
+
 const ProfileWrapper = styled.View`
   padding-bottom: 10px;
 `;
 
 const TopTextWrapper = styled.View`
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 `;
 
 const Profile = styled.Image``;
 
-const BottomTexttWrapper = styled.View`
+const TexttWrapper = styled.View`
   align-items: center;
   position: absolute;
   padding-vertical: 40px;
@@ -27,7 +31,7 @@ const BottomTexttWrapper = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: ${props => props.size};
+  font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 
@@ -49,7 +53,7 @@ const ProfileAndImageWrapper = styled.View`
 export default class Farmer extends React.PureComponent {
   render() {
     return (
-      <Wrapper>
+      <Animation animation="fadeIn">
         <ProfileAndImageWrapper>
           <ProfileWrapper>
             <Profile
@@ -67,11 +71,11 @@ export default class Farmer extends React.PureComponent {
             />
           </ImageWrapper>
         </ProfileAndImageWrapper>
-        <BottomTexttWrapper>
+        <TexttWrapper>
           <Text size={23}>Welcome to NU Farm LoT</Text>
           <Text size={18}>Enhance farmer with technology</Text>
-        </BottomTexttWrapper>
-      </Wrapper>
+        </TexttWrapper>
+      </Animation>
     );
   }
 }

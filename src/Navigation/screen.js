@@ -1,19 +1,47 @@
 import {Navigation} from 'react-native-navigation';
+import utils from '../utils';
 
-import Dashboard from '../views/Dashboard';
 import GuideScreen from '../views/GuideScreen';
 
-export const DASHBOARD = 'Nu.Dashboard';
+import SelectFarm from '../views/Setup/SelectFarm';
+import FarmSize from '../views/Setup/FarmSize';
+import Sensor from '../views/Setup/Sensor';
+import WaterSchedule from '../views/Setup/WaterSchedule';
+import Water from '../views/Setup/Water';
+import SmartAlert from '../views/Setup/SmartAlert';
+import Done from '../views/Setup/Done';
+
+import Dashboard from '../views/Dashboard';
+
 export const GUIDESCREEN = 'Nu.GuideScreen';
+
+export const SELECT_FARM = 'Nu.SelectFarm';
+export const FARM_SIZE = 'Nu.FarmSize';
+export const SENSOR = 'Nu.Sensor';
+export const WATER_SCHEDULE = 'Nu.WaterSchedule';
+export const WATER = 'Nu.Water';
+export const SMART_ALERT = 'Nu.SmartAlert';
+export const DONE = 'Nu.Done';
+
+export const DASHBOARD = 'Nu.Dashboard';
 
 export const Screens = new Map();
 
-Screens.set(DASHBOARD, Dashboard);
 Screens.set(GUIDESCREEN, GuideScreen);
+
+Screens.set(SELECT_FARM, SelectFarm);
+Screens.set(FARM_SIZE, FarmSize);
+Screens.set(SENSOR, Sensor);
+Screens.set(WATER_SCHEDULE, WaterSchedule);
+Screens.set(WATER, Water);
+Screens.set(SMART_ALERT, SmartAlert);
+Screens.set(DONE, Done);
+
+Screens.set(DASHBOARD, Dashboard);
 
 export const popBack = componentId => Navigation.pop(componentId);
 
-export const goToDashboard = () => {
+export const setRootHome = () => {
   Navigation.setRoot({
     root: {
       stack: {
@@ -29,10 +57,80 @@ export const goToDashboard = () => {
   });
 };
 
-// export const guideScreen = () => {
-//   Navigation.push({
-//     component: {
-//       name: GUIDESCREEN,
-//     },
-//   });
-// };
+export const goToSelectFarm = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: SELECT_FARM,
+    },
+  });
+};
+
+export const goToFarmSize = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: FARM_SIZE,
+    },
+  });
+};
+
+export const goToSensor = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: SENSOR,
+    },
+  });
+};
+
+export const goToWaterSchedule = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: WATER_SCHEDULE,
+    },
+  });
+};
+
+export const goToWater = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: WATER,
+    },
+  });
+};
+
+export const goToSmartAlert = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: SMART_ALERT,
+    },
+  });
+};
+
+export const goToDone = componentId => {
+  Navigation.push(componentId, {
+    component: {
+      name: DONE,
+    },
+  });
+};
+
+export const goToDashboard = () => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: DASHBOARD,
+              options: {
+                layout: {
+                  backgroundColor: `${utils.colors.veryLightGray}`,
+                  componentBackgroundColor: `${utils.colors.veryLightGray}`,
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
+};
