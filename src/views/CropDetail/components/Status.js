@@ -46,6 +46,7 @@ const VolumnText = styled.Text`
 
 export default class Water extends React.Component {
   render() {
+    const {crop} = this.props;
     return (
       <Container>
         <Wrapper>
@@ -58,10 +59,10 @@ export default class Water extends React.Component {
               <VolumnText
                 textColor={utils.colors.activate}
                 style={{marginRight: 5}}>
-                28°C
+                {crop.humandity.temperature + '°C'}
               </VolumnText>
               <Progress.Bar
-                progress={0.5}
+                progress={crop.humandity.temperature / 40}
                 width={230}
                 height={10}
                 borderRadius={8}
@@ -85,10 +86,10 @@ export default class Water extends React.Component {
               <VolumnText
                 textColor={utils.colors.carrot}
                 style={{marginRight: 5}}>
-                65%
+                {crop.humandity.water_volume + `%`}
               </VolumnText>
               <Progress.Bar
-                progress={0.5}
+                progress={crop.humandity.water_volume / 100}
                 width={230}
                 height={10}
                 borderRadius={8}
@@ -112,10 +113,10 @@ export default class Water extends React.Component {
               <VolumnText
                 textColor={utils.colors.carrot}
                 style={{marginRight: 5}}>
-                0.3m
+                {crop.humandity.water_capacity + `m`}
               </VolumnText>
               <Progress.Bar
-                progress={0.5}
+                progress={crop.humandity.water_capacity / 1}
                 width={230}
                 height={10}
                 borderRadius={8}

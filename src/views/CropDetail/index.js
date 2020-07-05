@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Swiper from 'react-native-swiper';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import ADIcon from 'react-native-vector-icons/AntDesign';
+import {dismissModal} from '../../navigation/screen';
 
 import utils from '../../utils';
 
@@ -42,19 +43,22 @@ const Image = styled.Image`
   height: 160px;
 `;
 
-const Divider = styled.View`
-  padding: 10px 0px 10px 0px;
+const Icon = styled(ADIcon)`
+  margin-vertical: 6px;
 `;
 
-// ++++++++++++++++++++++++++++++++++++++++
-
 const PaginationWrapper = styled.View`
-  background-color: ${utils.colors.seaFoam};
+  flex-direction: row;
+`;
+
+const PaginationTextWrapper = styled.View`
+  background-color: ${props => props.color};
   width: 90px;
   height: 40px;
   border-radius: 30px;
   align-items: center;
   justify-content: center;
+  margin-horizontal: 15px;
 `;
 
 const PaginationText = styled.Text`
@@ -74,34 +78,25 @@ export default class CropDetail extends React.Component {
     if (index === 0) {
       return (
         <>
-          <ImageWrapper>
-            <Image source={require('../../assets/images/Sensor/Sensor.png')} />
-            <ADIcon name="caretdown" size={35} color={utils.colors.seaFoam} />
-            <Divider />
-          </ImageWrapper>
+          <Image source={require('../../assets/images/Sensor/Sensor.png')} />
+          <Icon name="caretdown" size={35} color={utils.colors.seaFoam} />
         </>
       );
     } else if (index === 2) {
       return (
         <>
-          <ImageWrapper>
-            <Image
-              source={require('../../assets/icons/crops/Tomato/Tomato.png')}
-            />
-            <ADIcon name="caretdown" size={35} color={utils.colors.seaFoam} />
-            <Divider />
-          </ImageWrapper>
+          <Image
+            source={require('../../assets/icons/crops/Tomato/Tomato.png')}
+          />
+          <Icon name="caretdown" size={35} color={utils.colors.seaFoam} />
         </>
       );
     }
 
     return (
       <>
-        <ImageWrapper>
-          <Image source={require('../../assets/images/Drone/Drone.png')} />
-          <ADIcon name="caretdown" size={35} color={utils.colors.seaFoam} />
-          <Divider />
-        </ImageWrapper>
+        <Image source={require('../../assets/images/Drone/Drone.png')} />
+        <Icon name="caretdown" size={35} color={utils.colors.seaFoam} />
       </>
     );
   };
@@ -109,49 +104,58 @@ export default class CropDetail extends React.Component {
   renderPagination = () => {
     const {index} = this.state;
 
+    let inActive = utils.colors.ligntSeaFoam;
+
     if (index === 0) {
-      return (
-        <PaginationWrapper>
-          <PaginationText>Sensor</PaginationText>
-        </PaginationWrapper>
-      );
+      inActive = utils.colors.seaFoam;
     } else if (index === 2) {
-      return (
-        <PaginationWrapper>
-          <PaginationText>Status</PaginationText>
-        </PaginationWrapper>
-      );
+      inActive = utils.colors.seaFoam;
     }
 
     return (
       <PaginationWrapper>
-        <PaginationText>Water</PaginationText>
+        <PaginationTextWrapper color={inActive}>
+          <PaginationText>Sensor</PaginationText>
+        </PaginationTextWrapper>
+        <PaginationTextWrapper color={inActive}>
+          <PaginationText>Water</PaginationText>
+        </PaginationTextWrapper>
+        <PaginationTextWrapper color={inActive}>
+          <PaginationText>Status</PaginationText>
+        </PaginationTextWrapper>
       </PaginationWrapper>
     );
   };
 
   render() {
+    const {componentId, crop} = this.props;
+
     return (
       <MainContainer>
         <HeadWrapper>
-          <BackButtonWrapper activeOpacity={0.5}>
+          <BackButtonWrapper
+            activeOpacity={0.5}
+            onPress={() => dismissModal(componentId)}>
             <MDIcon
               name="keyboard-arrow-left"
               size={35}
               color={utils.colors.darkGreen}
             />
-            <BackButtonText>Back</BackButtonText>
+            <BackButtonText>{crop.crop_name}</BackButtonText>
           </BackButtonWrapper>
-          {this.renderImage()}
+          <ImageWrapper>
+            {this.renderImage()}
+            {this.renderPagination()}
+          </ImageWrapper>
         </HeadWrapper>
         <Swiper
           loop={false}
           index={1}
           showsPagination={false}
           onIndexChanged={index => this.setState({index: index})}>
-          <Sensor />
-          <Water />
-          <Status />
+          <Sensor crop={crop} />
+          <Water crop={crop} />
+          <Status crop={crop} />
         </Swiper>
       </MainContainer>
     );

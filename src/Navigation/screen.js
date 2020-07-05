@@ -42,7 +42,7 @@ Screens.set(DONE, Done);
 Screens.set(DASHBOARD, Dashboard);
 Screens.set(CROP_DETAIL, CropDetail);
 
-export const popBack = componentId => Navigation.pop(componentId);
+export const dismissModal = componentId => Navigation.dismissModal(componentId);
 
 export const setRootHome = () => {
   Navigation.setRoot({
