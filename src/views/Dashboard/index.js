@@ -20,9 +20,9 @@ const DashboardInfo = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-horizontal: 20px;
-  padding-top: 20px;
-  padding-bottom: 10px;
+  margin-horizontal: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 
 const BoardName = styled.Text`
@@ -38,8 +38,19 @@ const Total = styled.Text`
 `;
 
 export default class Dashboard extends React.Component {
+  state = {
+    crop: null,
+  };
+
   renderCrop = ({item}) => {
-    return <CropCard crop={item} />;
+    const {componentId} = this.props;
+    return (
+      <CropCard
+        crop={item}
+        componentId={componentId}
+        onCropPress={eachCrop => this.setState({crop: eachCrop})}
+      />
+    );
   };
 
   render() {
@@ -80,12 +91,13 @@ export default class Dashboard extends React.Component {
         <Header />
         <DashboardInfo>
           <BoardName>Farm Overview</BoardName>
-          <Total>{`Total: ` + CROPS_DATA.length}</Total>
+          <Total>{'Total: ' + CROPS_DATA.length}</Total>
         </DashboardInfo>
         <FlatList
           data={CROPS_DATA}
           renderItem={this.renderCrop}
           keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
         />
         <BottomTab />
       </DashboardAnimate>

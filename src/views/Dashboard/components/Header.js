@@ -4,10 +4,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MDIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import utils from '../../../utils';
+import device from '../../../utils/Devices';
 
 const HeaderWrapper = styled.View`
   background-color: ${utils.colors.lightGreen};
-  padding-top: 80px;
+  padding-top: ${device.isIphoneX ? 80 : 40}px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 `;

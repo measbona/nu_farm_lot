@@ -12,6 +12,7 @@ import SmartAlert from '../views/Setup/SmartAlert';
 import Done from '../views/Setup/Done';
 
 import Dashboard from '../views/Dashboard';
+import CropDetail from '../views/CropDetail';
 
 export const GUIDESCREEN = 'Nu.GuideScreen';
 
@@ -24,6 +25,7 @@ export const SMART_ALERT = 'Nu.SmartAlert';
 export const DONE = 'Nu.Done';
 
 export const DASHBOARD = 'Nu.Dashboard';
+export const CROP_DETAIL = 'Nu.CropDetail';
 
 export const Screens = new Map();
 
@@ -38,6 +40,7 @@ Screens.set(SMART_ALERT, SmartAlert);
 Screens.set(DONE, Done);
 
 Screens.set(DASHBOARD, Dashboard);
+Screens.set(CROP_DETAIL, CropDetail);
 
 export const popBack = componentId => Navigation.pop(componentId);
 
@@ -130,6 +133,21 @@ export const goToDashboard = () => {
             },
           },
         ],
+      },
+    },
+  });
+};
+
+export const showCropDetail = passProps => {
+  Navigation.showModal({
+    component: {
+      name: CROP_DETAIL,
+      passProps,
+      options: {
+        layout: {
+          backgroundColor: `${utils.colors.veryLightGray}`,
+          componentBackgroundColor: `${utils.colors.veryLightGray}`,
+        },
       },
     },
   });

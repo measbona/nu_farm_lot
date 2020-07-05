@@ -6,6 +6,8 @@ import utils from '../../../utils';
 import CropInfo from './CropInfo';
 import Humandity from './Humandity';
 
+import {showCropDetail} from '../../../navigation/screen';
+
 const Wrapper = styled.TouchableOpacity`
   padding-top: 12px;
 `;
@@ -26,9 +28,21 @@ const Line = styled.View`
 `;
 
 export default class CropCards extends React.Component {
+  handleCropData = crop => {
+    const {componentId} = this.props;
+
+    this.props.onCropPress(crop);
+    showCropDetail({
+      crop,
+      componentId,
+    });
+  };
+
   render() {
     return (
-      <Wrapper activeOpacity={0.5}>
+      <Wrapper
+        activeOpacity={0.5}
+        onPress={() => this.handleCropData(this.props.crop)}>
         <CropCard style={utils.shadows.cropCardShadow}>
           <CropInfo {...this.props} />
           <Line />

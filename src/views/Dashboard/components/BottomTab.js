@@ -4,6 +4,7 @@ import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import utils from '../../../utils';
 import Colors from '../../../utils/colors';
+import device from '../../../utils/Devices';
 
 const Wrapper = styled.View`
   background-color: ${Colors.white};
@@ -12,7 +13,7 @@ const Wrapper = styled.View`
   flex-direction: row;
   padding-horizontal: 25px;
   padding-bottom: 10px;
-  height: 70px;
+  height: ${device.isIphoneX ? 70 : 60}px;
 `;
 
 const EditButton = styled.TouchableOpacity``;
