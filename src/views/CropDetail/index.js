@@ -51,7 +51,7 @@ const PaginationWrapper = styled.View`
   flex-direction: row;
 `;
 
-const PaginationTextWrapper = styled.View`
+const PaginationTextWrapper = styled.TouchableOpacity`
   background-color: ${props => props.color};
   width: 90px;
   height: 40px;
@@ -104,23 +104,30 @@ export default class CropDetail extends React.Component {
   renderPagination = () => {
     const {index} = this.state;
 
-    let inActive = utils.colors.ligntSeaFoam;
-
-    if (index === 0) {
-      inActive = utils.colors.seaFoam;
-    } else if (index === 2) {
-      inActive = utils.colors.seaFoam;
-    }
+    const active = utils.colors.seaFoam;
+    const inActive = utils.colors.ligntSeaFoam;
 
     return (
       <PaginationWrapper>
-        <PaginationTextWrapper color={inActive}>
+        <PaginationTextWrapper
+          activeOpacity={0.5}
+          onPress={() => this.setState({index: 0})}
+          disabled={index === 0 && true}
+          color={index === 0 ? active : inActive}>
           <PaginationText>Sensor</PaginationText>
         </PaginationTextWrapper>
-        <PaginationTextWrapper color={inActive}>
+        <PaginationTextWrapper
+          activeOpacity={0.5}
+          onPress={() => this.setState({index: 1})}
+          disabled={index === 1 && true}
+          color={index === 1 ? active : inActive}>
           <PaginationText>Water</PaginationText>
         </PaginationTextWrapper>
-        <PaginationTextWrapper color={inActive}>
+        <PaginationTextWrapper
+          activeOpacity={0.5}
+          onPress={() => this.setState({index: 2})}
+          disabled={index === 2 && true}
+          color={index === 2 ? active : inActive}>
           <PaginationText>Status</PaginationText>
         </PaginationTextWrapper>
       </PaginationWrapper>
@@ -128,6 +135,7 @@ export default class CropDetail extends React.Component {
   };
 
   render() {
+    const {index} = this.state;
     const {componentId, crop} = this.props;
 
     return (
@@ -150,7 +158,7 @@ export default class CropDetail extends React.Component {
         </HeadWrapper>
         <Swiper
           loop={false}
-          index={1}
+          index={index}
           showsPagination={false}
           onIndexChanged={index => this.setState({index: index})}>
           <Sensor crop={crop} />

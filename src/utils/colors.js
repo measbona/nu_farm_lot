@@ -21,7 +21,7 @@ const colors = {
   lightWater: '#ABCFFD',
   lightWaterTime: '#0ED1B275',
   lightActivate: '#7DDDE9',
-  ligntSeaFoam: '#64e2a9',
+  ligntSeaFoam: '#9eedc9',
 
   darkBlue: '#00BCD4',
   darkGreen: '#678242',
