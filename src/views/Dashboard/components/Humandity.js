@@ -31,11 +31,6 @@ export default class Humandity extends React.Component {
   render() {
     const {crop} = this.props;
 
-    const blue = utils.colors.sky;
-    const lightBlue = utils.colors.lightSky;
-    const carrot = utils.colors.carrot;
-    const lightOrange = utils.colors.lightCarrot;
-
     return (
       <HumandityWrapper>
         <ResourceWrapper>
@@ -44,8 +39,8 @@ export default class Humandity extends React.Component {
             size={80}
             width={10}
             fill={(crop.humandity.temperature * 100) / 32}
-            tintColor={blue}
-            backgroundColor={lightBlue}>
+            tintColor={utils.colors.sky}
+            backgroundColor={utils.colors.lightSky}>
             {() => (
               <TemperatureImage
                 source={require('../../../assets/icons/crops/CropTemperature/CropTemperature.png')}
@@ -62,8 +57,8 @@ export default class Humandity extends React.Component {
             size={80}
             width={10}
             fill={(crop.humandity.water_volume * 100) / 100}
-            tintColor={carrot}
-            backgroundColor={lightOrange}>
+            tintColor={utils.colors.carrot}
+            backgroundColor={utils.colors.lightCarrot}>
             {() => (
               <WaterLevelImage
                 source={require('../../../assets/icons/crops/WaterLevel/WaterLevel.png')}
@@ -80,8 +75,8 @@ export default class Humandity extends React.Component {
             size={80}
             width={10}
             fill={crop.humandity.water_capacity * 10 * 10}
-            tintColor={carrot}
-            backgroundColor={lightOrange}>
+            tintColor={utils.colors.carrot}
+            backgroundColor={utils.colors.lightCarrot}>
             {() => (
               <WaterCapacityImage
                 source={require('../../../assets/icons/crops/WaterCapacity/WaterCapacity.png')}

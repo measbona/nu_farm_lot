@@ -20,9 +20,9 @@ const DashboardInfo = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-horizontal: 20px;
-  padding-top: 20px;
-  padding-bottom: 10px;
+  margin-horizontal: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 
 const BoardName = styled.Text`
@@ -38,11 +38,29 @@ const Total = styled.Text`
 `;
 
 export default class Dashboard extends React.Component {
+  state = {
+    crop: null,
+    edit: false,
+    destroy: false,
+  };
+
   renderCrop = ({item}) => {
-    return <CropCard crop={item} />;
+    const {edit, destroy} = this.state;
+    const {componentId} = this.props;
+
+    return (
+      <CropCard
+        crop={item}
+        componentId={componentId}
+        onCropPress={eachCrop => this.setState({crop: eachCrop})}
+        edit={edit}
+        destroy={destroy}
+      />
+    );
   };
 
   render() {
+    const {edit, destroy} = this.state;
     const CROPS_DATA = [
       {
         id: '1',
@@ -80,14 +98,20 @@ export default class Dashboard extends React.Component {
         <Header />
         <DashboardInfo>
           <BoardName>Farm Overview</BoardName>
-          <Total>{`Total: ` + CROPS_DATA.length}</Total>
+          <Total>{'Total: ' + CROPS_DATA.length}</Total>
         </DashboardInfo>
         <FlatList
           data={CROPS_DATA}
           renderItem={this.renderCrop}
           keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
         />
-        <BottomTab />
+        <BottomTab
+          onDestroyChange={data => this.setState({destroy: data})}
+          onEditChange={data => this.setState({edit: data})}
+          edit={edit}
+          destroy={destroy}
+        />
       </DashboardAnimate>
     );
   }
