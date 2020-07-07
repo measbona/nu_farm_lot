@@ -61,6 +61,8 @@ export default class Dashboard extends React.Component {
 
   render() {
     const {edit, destroy} = this.state;
+    const {componentId} = this.props;
+
     const CROPS_DATA = [
       {
         id: '1',
@@ -111,6 +113,7 @@ export default class Dashboard extends React.Component {
           onEditChange={data => this.setState({edit: data})}
           edit={edit}
           destroy={destroy}
+          componentId={componentId}
         />
       </DashboardAnimate>
     );

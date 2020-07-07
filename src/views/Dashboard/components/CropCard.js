@@ -59,7 +59,9 @@ export default class CropCards extends React.Component {
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          {text: 'Area', onPress: () => console.log('OK Pressed')},
+          {text: 'Watering Schedule', onPress: () => console.log('OK Pressed')},
+          {text: 'Smart Alert', onPress: () => console.log('OK Pressed')},
         ],
         {cancelable: false},
       );

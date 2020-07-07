@@ -6,6 +6,8 @@ import utils from '../../../utils';
 import Colors from '../../../utils/colors';
 import device from '../../../utils/Devices';
 
+import {goToSelectFarm} from '../../../navigation/screen';
+
 const Wrapper = styled.View`
   background-color: ${Colors.white};
   align-items: center;
@@ -37,13 +39,21 @@ const Divider = styled.View`
 
 export default class BottomTab extends React.Component {
   handleTickButton = () => {
-    const {onDestroyChange, onEditChange, edit, destroy} = this.props;
+    const {
+      onDestroyChange,
+      onEditChange,
+      edit,
+      destroy,
+      componentId,
+    } = this.props;
 
     if (edit) {
-      onEditChange(false);
-    } else {
-      onDestroyChange(false);
+      return onEditChange(false);
+    } else if (destroy) {
+      return onDestroyChange(false);
     }
+
+    goToSelectFarm(componentId);
   };
 
   handleIconRender = () => {
