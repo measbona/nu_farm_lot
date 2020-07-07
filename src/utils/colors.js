@@ -13,6 +13,8 @@ const colors = {
   waterTime: '#0ED1B2',
   waterNow: '#419BFD',
   activate: '#00BCD4',
+  red: '#f44335',
+  setting: '#6aa9cd',
 
   lightGreen: '#D1DDBE',
   lightBlue: '#00C8C8',

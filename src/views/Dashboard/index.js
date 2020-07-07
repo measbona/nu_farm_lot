@@ -40,20 +40,27 @@ const Total = styled.Text`
 export default class Dashboard extends React.Component {
   state = {
     crop: null,
+    edit: false,
+    destroy: false,
   };
 
   renderCrop = ({item}) => {
+    const {edit, destroy} = this.state;
     const {componentId} = this.props;
+
     return (
       <CropCard
         crop={item}
         componentId={componentId}
         onCropPress={eachCrop => this.setState({crop: eachCrop})}
+        edit={edit}
+        destroy={destroy}
       />
     );
   };
 
   render() {
+    const {edit, destroy} = this.state;
     const CROPS_DATA = [
       {
         id: '1',
@@ -99,7 +106,12 @@ export default class Dashboard extends React.Component {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-        <BottomTab />
+        <BottomTab
+          onDestroyChange={data => this.setState({destroy: data})}
+          onEditChange={data => this.setState({edit: data})}
+          edit={edit}
+          destroy={destroy}
+        />
       </DashboardAnimate>
     );
   }
