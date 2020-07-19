@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 
-import FarmSelected from '../../globalcomponent/FarmSelected';
+import FarmSelected from './components/FarmWater';
 
 import {goToWater} from '../../navigation/screen';
 
