@@ -1,121 +1,39 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
 
 import utils from '../../../utils';
-import Colors from '../../../utils/colors';
-import device from '../../../utils/Devices';
-
-import {goToSelectFarm} from '../../../navigation/screen';
 
 const Wrapper = styled.View`
-  background-color: ${Colors.white};
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  background-color: ${utils.colors.lightGreen};
+  min-height: ${utils.devices.isNotch() ? 70 : 50}px;
+`;
+
+const Action = styled.View`
   flex-direction: row;
-  padding-horizontal: 25px;
-  padding-bottom: 10px;
-  height: ${device.isIphoneX ? 70 : 60}px;
+  padding-horizontal: 20px;
+  padding-bottom: ${utils.devices.isNotch() ? 15 : 0}px;
+  justify-content: space-between;
 `;
 
-const EditButton = styled.TouchableOpacity``;
-
-const EditImage = styled.Image``;
-
-const AddButton = styled.TouchableOpacity`
-  padding-bottom: 49px;
-`;
-
-const AddImage = styled.Image``;
-
-const DeleteButton = styled.TouchableOpacity``;
-
-const DeleteImage = styled.Image``;
-
-const Divider = styled.View`
-  align-items: center;
-  padding-bottom: 49px;
-`;
+const Touchable = styled.TouchableOpacity``;
 
 export default class BottomTab extends React.Component {
-  handleTickButton = () => {
-    const {
-      onDestroyChange,
-      onEditChange,
-      edit,
-      destroy,
-      componentId,
-    } = this.props;
-
-    if (edit) {
-      return onEditChange(false);
-    } else if (destroy) {
-      return onDestroyChange(false);
-    }
-
-    goToSelectFarm(componentId);
-  };
-
-  handleIconRender = () => {
-    const {edit, destroy} = this.props;
-
-    if (edit || destroy) {
-      return (
-        <AnimatedCircularProgress
-          rotation={82}
-          size={70}
-          width={10}
-          fill={55}
-          tintColor={Colors.yellow}>
-          {() => (
-            <AddImage source={require('../../../assets/icons/Tick/Tick.png')} />
-          )}
-        </AnimatedCircularProgress>
-      );
-    } else {
-      return (
-        <AnimatedCircularProgress
-          rotation={82}
-          size={70}
-          width={10}
-          fill={55}
-          tintColor={Colors.yellow}>
-          {() => (
-            <AddImage source={require('../../../assets/icons/Add/Add.png')} />
-          )}
-        </AnimatedCircularProgress>
-      );
-    }
-  };
-
   render() {
-    const {onDestroyChange, onEditChange, edit, destroy} = this.props;
-
     return (
-      <Wrapper style={utils.shadows.cropCardShadow}>
-        {edit || destroy ? (
-          <Divider />
-        ) : (
-          <EditButton activeOpacity={0.5} onPress={() => onEditChange(true)}>
-            <EditImage
-              source={require('../../../assets/icons/Edit/Edit.png')}
-            />
-          </EditButton>
-        )}
-        <AddButton activeOpacity={0.9} onPress={this.handleTickButton}>
-          {this.handleIconRender()}
-        </AddButton>
-        {edit || destroy ? (
-          <Divider />
-        ) : (
-          <DeleteButton
-            activeOpacity={0.5}
-            onPress={() => onDestroyChange(true)}>
-            <DeleteImage
-              source={require('../../../assets/icons/Trash/Trash.png')}
-            />
-          </DeleteButton>
-        )}
+      <Wrapper>
+        <Action>
+          <Touchable>
+            <MDIcon name="edit" size={40} />
+          </Touchable>
+          <Touchable>
+            <MDIcon name="add-circle" size={40} />
+          </Touchable>
+          <Touchable>
+            <MDIcon name="delete" size={40} />
+          </Touchable>
+        </Action>
       </Wrapper>
     );
   }

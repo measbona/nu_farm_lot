@@ -1,73 +1,52 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {ScrollView} from 'react-native';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
 
 import utils from '../../utils';
+import {showCropDetail} from '../../navigation/screen';
 
 import Header from './components/Header';
 import CropCard from './components/CropCard';
-import BottomTab from './components/BottomTab';
 
 const Wrapper = styled.View`
   flex: 1;
-  justify-content: space-between;
+  background-color: white;
 `;
 
 const DashboardAnimate = Animatable.createAnimatableComponent(Wrapper);
 
-const DashboardInfo = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+const AddButton = styled.View`
   align-items: center;
-  margin-horizontal: 20px;
-  margin-top: 10px;
-  margin-bottom: 5px;
 `;
 
-const BoardName = styled.Text`
-  font-size: 30px;
-  font-weight: 600;
-  color: ${utils.colors.darkGreen};
-`;
-
-const Total = styled.Text`
-  font-size: 23px;
-  font-weight: 500;
-  color: ${utils.colors.darkGreen};
+const Touchable = styled.TouchableOpacity`
+  position: absolute;
+  align-items: center;
+  bottom: ${utils.devices.isNotch() ? 45 : 30}px;
 `;
 
 export default class Dashboard extends React.Component {
   state = {
-    crop: null,
-    edit: false,
-    destroy: false,
+    editAction: false,
   };
 
-  renderCrop = ({item}) => {
-    const {edit, destroy} = this.state;
-    const {componentId} = this.props;
+  handleEditAction = value => {
+    this.setState({editAction: !value});
+  };
 
-    return (
-      <CropCard
-        crop={item}
-        componentId={componentId}
-        onCropPress={eachCrop => this.setState({crop: eachCrop})}
-        edit={edit}
-        destroy={destroy}
-      />
-    );
+  handleOnCropPress = crop => {
+    showCropDetail({crop});
   };
 
   render() {
-    const {edit, destroy} = this.state;
-    const {componentId} = this.props;
+    const {editAction} = this.state;
 
     const CROPS_DATA = [
       {
         id: '1',
-        crop_name: 'Tomato',
-        land_size: '20',
+        name: 'Tomato',
         humandity: {
           temperature: '28',
           water_volume: '80',
@@ -76,45 +55,41 @@ export default class Dashboard extends React.Component {
       },
       {
         id: '2',
-        crop_name: 'Grape',
-        land_size: '30',
+        name: 'Graph',
         humandity: {
-          temperature: '25',
-          water_volume: '50',
-          water_capacity: '0.1',
-        },
-      },
-      {
-        id: '3',
-        crop_name: 'Sugar Cane',
-        land_size: '40',
-        humandity: {
-          temperature: '30',
+          temperature: '28',
           water_volume: '80',
-          water_capacity: '0.7',
+          water_capacity: '0.3',
         },
       },
     ];
+
     return (
       <DashboardAnimate animation="fadeIn">
         <Header />
-        <DashboardInfo>
-          <BoardName>Farm Overview</BoardName>
-          <Total>{'Total: ' + CROPS_DATA.length}</Total>
-        </DashboardInfo>
-        <FlatList
-          data={CROPS_DATA}
-          renderItem={this.renderCrop}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-        />
-        <BottomTab
-          onDestroyChange={data => this.setState({destroy: data})}
-          onEditChange={data => this.setState({edit: data})}
-          edit={edit}
-          destroy={destroy}
-          componentId={componentId}
-        />
+        <ScrollView>
+          {CROPS_DATA.map(crop => {
+            return (
+              <CropCard
+                key={crop.id}
+                crop={crop}
+                onLongPress={this.handleEditAction}
+                onCropPress={this.handleOnCropPress}
+                editAction={editAction}
+              />
+            );
+          })}
+        </ScrollView>
+        {editAction ? (
+          <AddButton>
+            <Touchable
+              activeOpacity={0.5}
+              onPress={() => alert('Add')}
+              hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
+              <MDIcon name="add-circle-outline" size={45} />
+            </Touchable>
+          </AddButton>
+        ) : null}
       </DashboardAnimate>
     );
   }
