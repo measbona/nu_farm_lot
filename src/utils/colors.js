@@ -16,7 +16,7 @@ const colors = {
   red: '#f44335',
   setting: '#6aa9cd',
 
-  lightGreen: '#D1DDBE',
+  lightGreen: 'rgba(110, 184, 77, 0.8)',
   lightBlue: '#00C8C8',
   lightSky: '#b2eeee',
   lightCarrot: '#fcdbb0',
