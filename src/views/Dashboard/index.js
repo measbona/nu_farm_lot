@@ -32,10 +32,6 @@ export default class Dashboard extends React.Component {
     editAction: false,
   };
 
-  handleEditAction = value => {
-    this.setState({editAction: !value});
-  };
-
   handleOnCropPress = crop => {
     showCropDetail({crop});
   };
@@ -52,28 +48,54 @@ export default class Dashboard extends React.Component {
           water_volume: '80',
           water_capacity: '0.3',
         },
+        image_name:
+          'https://www.hindimeaning.com/wp-content/uploads/2012/12/Tomato.jpg',
       },
       {
         id: '2',
-        name: 'Graph',
+        name: 'JackFruit',
         humandity: {
-          temperature: '28',
-          water_volume: '80',
-          water_capacity: '0.3',
+          temperature: '10',
+          water_volume: '90',
+          water_capacity: '0.1',
         },
+        image_name:
+          'https://www.hindimeaning.com/wp-content/uploads/2015/08/Jackfruit.jpg',
+      },
+      {
+        id: '3',
+        name: 'Carrot',
+        humandity: {
+          temperature: '19',
+          water_volume: '100',
+          water_capacity: '0.5',
+        },
+        image_name:
+          'https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg',
+      },
+      {
+        id: '4',
+        name: 'Cucumber',
+        humandity: {
+          temperature: '24',
+          water_volume: '20',
+          water_capacity: '0.1',
+        },
+        image_name:
+          'https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg',
       },
     ];
 
     return (
       <DashboardAnimate animation="fadeIn">
-        <Header />
+        <Header cropSize={CROPS_DATA.length} />
         <ScrollView>
           {CROPS_DATA.map(crop => {
             return (
               <CropCard
                 key={crop.id}
                 crop={crop}
-                onLongPress={this.handleEditAction}
+                onLongPress={value => this.setState({editAction: !value})}
                 onCropPress={this.handleOnCropPress}
                 editAction={editAction}
               />

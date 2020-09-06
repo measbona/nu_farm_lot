@@ -14,7 +14,7 @@ const Content = styled.View`
   border-radius: 10px;
   background-color: white;
   width: ${utils.devices.screenWidth - 30}px;
-  height: ${utils.devices.isIphoneX ? 165 : 150}px;
+  height: ${utils.devices.isIphoneX ? 165 : 162}px;
 `;
 
 const LabelWrapper = styled.View`
@@ -41,6 +41,14 @@ const ActionWrapper = styled.View`
 
 const Touchable = styled.TouchableOpacity`
   margin-horizontal: 10px;
+`;
+
+const Image = styled.Image`
+  flex: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: ${utils.devices.screenWidth - 30}px;
+  height: ${utils.devices.isIphoneX ? 165 : 162}px;
 `;
 
 export default class CropCards extends React.Component {
@@ -107,6 +115,11 @@ export default class CropCards extends React.Component {
               </ActionWrapper>
             ) : null}
           </LabelWrapper>
+          <Image
+            source={{
+              uri: `${crop.image_name}`,
+            }}
+          />
         </Content>
       </Container>
     );

@@ -66,6 +66,8 @@ const ForcastText = styled.Text`
 
 export default class Header extends React.Component {
   render() {
+    const {cropSize} = this.props;
+
     return (
       <Container style={utils.shadows.cropCardShadow}>
         <Wrapper>
@@ -81,7 +83,7 @@ export default class Header extends React.Component {
           <Notification>
             <FontAwsome5 name="seedling" size={30} />
             <BadgeWrapper>
-              <BadgeText>1</BadgeText>
+              <BadgeText>{cropSize}</BadgeText>
             </BadgeWrapper>
           </Notification>
           <Notification>
