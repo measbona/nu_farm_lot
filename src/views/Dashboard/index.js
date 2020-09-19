@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {ActivityIndicator, ScrollView} from 'react-native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
@@ -27,17 +27,30 @@ const Touchable = styled.TouchableOpacity`
   bottom: ${utils.devices.isNotch() ? 45 : 30}px;
 `;
 
+const Loading = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default class Dashboard extends React.Component {
   state = {
     editAction: false,
+    mounted: false,
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({mounted: true});
+    }, 1000);
+  }
 
   handleOnCropPress = crop => {
     showCropDetail({crop});
   };
 
   render() {
-    const {editAction} = this.state;
+    const {editAction, mounted} = this.state;
 
     const CROPS_DATA = [
       {
@@ -89,20 +102,26 @@ export default class Dashboard extends React.Component {
     return (
       <DashboardAnimate animation="fadeIn">
         <Header cropSize={CROPS_DATA.length} />
-        <ScrollView>
-          {CROPS_DATA.map(crop => {
-            return (
-              <CropCard
-                key={crop.id}
-                crop={crop}
-                onLongPress={value => this.setState({editAction: !value})}
-                onCropPress={this.handleOnCropPress}
-                editAction={editAction}
-              />
-            );
-          })}
-        </ScrollView>
-        {editAction ? (
+        {mounted ? (
+          <ScrollView>
+            {CROPS_DATA.map(crop => {
+              return (
+                <CropCard
+                  key={crop.id}
+                  crop={crop}
+                  onLongPress={value => this.setState({editAction: !value})}
+                  onCropPress={this.handleOnCropPress}
+                  editAction={editAction}
+                />
+              );
+            })}
+          </ScrollView>
+        ) : (
+          <Loading>
+            <ActivityIndicator size="large" color={utils.colors.lightGreen} />
+          </Loading>
+        )}
+        {editAction && (
           <AddButton>
             <Touchable
               activeOpacity={0.5}
@@ -111,7 +130,7 @@ export default class Dashboard extends React.Component {
               <MDIcon name="add-circle-outline" size={45} />
             </Touchable>
           </AddButton>
-        ) : null}
+        )}
       </DashboardAnimate>
     );
   }

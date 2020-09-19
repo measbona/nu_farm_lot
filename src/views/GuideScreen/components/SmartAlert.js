@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import {goToSelectFarm} from '../../../navigation/screen';
+import {goToDashboard} from '../../../navigation/screen';
 import utils from '../../../utils';
 
 const ISIPHONEX = utils.devices.isIphoneX ? 245 : 200;
@@ -71,7 +71,7 @@ export default class SmartAlert extends React.PureComponent {
           <StartButton
             activeOpacity={0.5}
             hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-            onPress={() => goToSelectFarm(this.props.componentId)}>
+            onPress={() => goToDashboard(this.props.componentId)}>
             <Text whiteColor size={20}>
               Get Started
             </Text>
