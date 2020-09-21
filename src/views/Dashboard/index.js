@@ -54,7 +54,6 @@ export default class Dashboard extends React.Component {
 
     const CROPS_DATA = [
       {
-        id: '1',
         name: 'Tomato',
         humandity: {
           temperature: '28',
@@ -65,7 +64,6 @@ export default class Dashboard extends React.Component {
           'https://www.hindimeaning.com/wp-content/uploads/2012/12/Tomato.jpg',
       },
       {
-        id: '2',
         name: 'JackFruit',
         humandity: {
           temperature: '10',
@@ -76,7 +74,6 @@ export default class Dashboard extends React.Component {
           'https://www.hindimeaning.com/wp-content/uploads/2015/08/Jackfruit.jpg',
       },
       {
-        id: '3',
         name: 'Carrot',
         humandity: {
           temperature: '19',
@@ -87,7 +84,6 @@ export default class Dashboard extends React.Component {
           'https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg',
       },
       {
-        id: '4',
         name: 'Cucumber',
         humandity: {
           temperature: '24',
@@ -103,11 +99,11 @@ export default class Dashboard extends React.Component {
       <DashboardAnimate animation="fadeIn">
         <Header cropSize={CROPS_DATA.length} />
         {mounted ? (
-          <ScrollView>
-            {CROPS_DATA.map(crop => {
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {CROPS_DATA.map((crop, key) => {
               return (
                 <CropCard
-                  key={crop.id}
+                  key={key}
                   crop={crop}
                   onLongPress={value => this.setState({editAction: !value})}
                   onCropPress={this.handleOnCropPress}
