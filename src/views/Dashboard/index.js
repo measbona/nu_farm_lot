@@ -4,6 +4,8 @@ import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
 
+import Geolocation from 'react-native-geolocation-service';
+
 import utils from '../../utils';
 import {showCropDetail} from '../../navigation/screen';
 
@@ -37,12 +39,24 @@ export default class Dashboard extends React.Component {
   state = {
     editAction: false,
     mounted: false,
+    locationData: null,
   };
 
   componentDidMount() {
     setTimeout(() => {
       this.setState({mounted: true});
     }, 1000);
+
+    Geolocation.getCurrentPosition(
+      position => {
+        this.setState({locationData: position});
+      },
+      error => {
+        // See error code charts below.
+        console.warn(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
   }
 
   handleOnCropPress = crop => {
