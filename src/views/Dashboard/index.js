@@ -40,31 +40,48 @@ export default class Dashboard extends React.Component {
     editAction: false,
     mounted: false,
     locationData: null,
+    weatherDetail: null,
   };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({mounted: true});
-    }, 1000);
-
-    Geolocation.getCurrentPosition(
-      position => {
-        this.setState({locationData: position});
-      },
-      error => {
-        // See error code charts below.
-        console.warn(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
+    this.handleLocation();
   }
+
+  handleLocation = async () => {
+    try {
+      const location = await this.getLatLngLocation();
+
+      const latitude = location.latitude;
+      const longitude = location.longitude;
+      const url = `https://api.climacell.co/v3/weather/realtime?lat=${latitude}&lon=${longitude}&unit_system=si&fields=temp%2Cprecipitation_type%2Cweather_code&apikey=FO1ZtXa5NiFrUBTPLEJ6hIfDrj1iG06g`;
+
+      const fetchWeather = await fetch(url);
+      const resJson = await fetchWeather.json();
+
+      this.setState({weatherDetail: resJson, mounted: true});
+    } catch (error) {
+      this.setState({mounted: false});
+    }
+  };
+
+  getLatLngLocation = () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(location => resolve(location.coords)),
+        () => reject(new Error('LOCATION')),
+        {
+          maximumAge: 0,
+          timeout: 20000,
+          enableHighAccuracy: true,
+        };
+    });
+  };
 
   handleOnCropPress = crop => {
     showCropDetail({crop});
   };
 
   render() {
-    const {editAction, mounted} = this.state;
+    const {editAction, mounted, weatherDetail} = this.state;
 
     const CROPS_DATA = [
       {
@@ -111,7 +128,11 @@ export default class Dashboard extends React.Component {
 
     return (
       <DashboardAnimate animation="fadeIn">
-        <Header cropSize={CROPS_DATA.length} />
+        <Header
+          cropSize={CROPS_DATA.length}
+          weatherDetail={weatherDetail}
+          mounted={mounted}
+        />
         {mounted ? (
           <ScrollView showsVerticalScrollIndicator={false}>
             {CROPS_DATA.map((crop, key) => {

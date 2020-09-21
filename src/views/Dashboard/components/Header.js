@@ -1,4 +1,5 @@
 import React from 'react';
+import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
 import FontAwsome from 'react-native-vector-icons/FontAwesome';
 import FontAwsome5 from 'react-native-vector-icons/FontAwesome5';
@@ -64,36 +65,49 @@ const ForcastText = styled.Text`
   font-weight: 600;
 `;
 
-export default class Header extends React.Component {
-  render() {
-    const {cropSize} = this.props;
+const Header = ({cropSize, weatherDetail, mounted}) => {
+  const weatherCode = weatherDetail && weatherDetail.weather_code.value;
+  const weatherType = utils.weather.getWeatherCode(weatherCode);
+  // eslint-disable-next-line prettier/prettier
+  const weatherTemp = weatherDetail && weatherDetail.temp.value.toFixed() || 'Nan';
+  // eslint-disable-next-line prettier/prettier
+  const precipitationName = weatherCode && weatherCode.replace(/(^|_)./g, s => s.slice(-1).toUpperCase()) || 'NaN';
 
-    return (
-      <Container style={utils.shadows.cropCardShadow}>
-        <Wrapper>
-          <WeatherForecast>
-            <Image
-              source={require('../../../assets/images/WeatherForecast/sunrise.png')}
+  return (
+    <Container style={utils.shadows.cropCardShadow}>
+      <Wrapper>
+        <WeatherForecast>
+          {mounted ? (
+            <>
+              <Image source={weatherType} />
+              <Column>
+                <ForcastText>{`Temperature : ${weatherTemp} °C`}</ForcastText>
+                <ForcastText>{`Precipitation : ${precipitationName}`}</ForcastText>
+              </Column>
+            </>
+          ) : (
+            <ActivityIndicator
+              style={{marginLeft: 50, marginTop: 15}}
+              size="small"
+              color="black"
             />
-            <Column>
-              <ForcastText>Temperature : 27 °C</ForcastText>
-              <ForcastText>Precipitation : Cloudy</ForcastText>
-            </Column>
-          </WeatherForecast>
-          <Notification>
-            <FontAwsome5 name="seedling" size={30} />
-            <BadgeWrapper>
-              <BadgeText>{cropSize}</BadgeText>
-            </BadgeWrapper>
-          </Notification>
-          <Notification>
-            <FontAwsome name="bell" size={30} />
-            <BadgeWrapper>
-              <BadgeText>1</BadgeText>
-            </BadgeWrapper>
-          </Notification>
-        </Wrapper>
-      </Container>
-    );
-  }
-}
+          )}
+        </WeatherForecast>
+        <Notification>
+          <FontAwsome5 name="seedling" size={30} />
+          <BadgeWrapper>
+            <BadgeText>{cropSize}</BadgeText>
+          </BadgeWrapper>
+        </Notification>
+        <Notification>
+          <FontAwsome name="bell" size={30} />
+          <BadgeWrapper>
+            <BadgeText>1</BadgeText>
+          </BadgeWrapper>
+        </Notification>
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default Header;
