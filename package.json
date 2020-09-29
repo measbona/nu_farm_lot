@@ -11,6 +11,8 @@
     "clean": "npm install && cd ios && pod install && cd .."
   },
   "dependencies": {
+    "@react-native-firebase/app": "^8.4.3",
+    "@react-native-firebase/firestore": "^7.8.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
