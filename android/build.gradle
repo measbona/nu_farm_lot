@@ -25,6 +25,8 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61" // Or whatever Kotlin version you've specified above
         classpath 'com.android.tools.build:gradle:3.5.3' // Or higher
+
+        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 
@@ -38,5 +40,6 @@ allprojects {
             url("$rootDir/../node_modules/react-native/android")
         }
         maven { url 'https://jitpack.io' }
+        google()  // Google's Maven repository
     }
 }
