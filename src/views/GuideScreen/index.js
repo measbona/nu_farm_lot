@@ -6,16 +6,19 @@ import Humidify from './components/Humidify';
 import ScheduleWatering from './components/ScheduleWatering';
 import SmartAlert from './components/SmartAlert';
 
+import Setup from '../Setup';
+
 export default class GuideScreen extends React.Component {
   render() {
     const {componentId} = this.props;
 
     return (
       <Swiper loop={false}>
-        <Farmer />
-        <Humidify />
-        <ScheduleWatering />
-        <SmartAlert componentId={componentId} />
+        {/* <Farmer /> */}
+        {/* <Humidify /> */}
+        {/* <ScheduleWatering /> */}
+        {/* <SmartAlert componentId={componentId} /> */}
+        <Setup />
       </Swiper>
     );
   }
