@@ -40,7 +40,6 @@ const Image = styled.Image`
 `;
 
 const StartButton = styled.TouchableOpacity`
-  flex-direction: row;
   align-items: center;
   border-radius: 50px;
   padding-vertical: 10px;

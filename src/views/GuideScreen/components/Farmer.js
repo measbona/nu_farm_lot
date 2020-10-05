@@ -19,10 +19,9 @@ const ProfileAndImageWrapper = styled.View`
 const TexttWrapper = styled.View`
   left: 0px;
   right: 0px;
-  bottom: 0px;
   position: absolute;
   align-items: center;
-  padding-bottom: ${utils.resizer.getHeight(470)}px;
+  bottom: ${utils.resizer.getHeight(470)}px;
 `;
 
 const Text = styled.Text`
@@ -55,7 +54,7 @@ export default class Farmer extends React.PureComponent {
         </ProfileAndImageWrapper>
         <TexttWrapper>
           <Text size={23} weightFont>
-            Welcome to NU Farm LoT
+            Welcome to NU Farm IoT
           </Text>
           <Text size={17}>Enhance farmer with technology</Text>
         </TexttWrapper>
