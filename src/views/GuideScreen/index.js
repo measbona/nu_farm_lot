@@ -9,8 +9,9 @@ import SmartAlert from './components/SmartAlert';
 export default class GuideScreen extends React.Component {
   render() {
     const {componentId} = this.props;
+
     return (
-      <Swiper paginationStyle={{bottom: 130}} loop={false}>
+      <Swiper loop={false}>
         <Farmer />
         <Humidify />
         <ScheduleWatering />

@@ -6,6 +6,13 @@ const shadows = {
     shadowColor: 'gray',
     elevation: 2,
   },
+  textShadow: {
+    shadowOffset: {width: 20, height: 0},
+    shadowRadius: 20,
+    shadowOpacity: 1,
+    shadowColor: 'white',
+    elevation: 2,
+  },
 };
 
 export default shadows;

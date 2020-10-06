@@ -1,71 +1,113 @@
 import React from 'react';
+import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
-import Entypo from 'react-native-vector-icons/Entypo';
-import MDIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwsome from 'react-native-vector-icons/FontAwesome';
+import FontAwsome5 from 'react-native-vector-icons/FontAwesome5';
 
 import utils from '../../../utils';
 
-const HeaderWrapper = styled.View`
+const Container = styled.View`
   background-color: ${utils.colors.lightGreen};
-  padding-top: 80px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  padding-top: ${utils.devices.devicePaddingTop}px;
+  min-height: ${utils.devices.isNotch() ? 70 : 50}px;
 `;
 
-const IconToucableWrapper = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+const Wrapper = styled.View`
+  min-height: 60px;
   align-items: center;
-  margin: 0px 20px 0px 20px;
-  bottom: 13px;
+  flex-direction: row;
+  padding-horizontal: 16px;
 `;
 
-const MenuIconTouchable = styled.TouchableOpacity``;
-
-const MenuIcon = styled(Entypo)``;
-
-const NotificationTouchable = styled.TouchableOpacity``;
-
-const Notification = styled(MDIcons)`
-  position: relative;
+const Notification = styled.View`
+  padding: 12px;
 `;
 
 const BadgeWrapper = styled.View`
+  right: 4px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
   position: absolute;
+  border-radius: 50px;
   align-items: center;
   justify-content: center;
-  background: ${utils.colors.black};
+  background-color: black;
   border-color: ${utils.colors.lightGreen};
-  border-width: 2px;
-  height: 20px;
-  width: 20px;
-  border-radius: 90px;
-  right: 0px;
-  top: 0px;
 `;
 
-const BadgeNumber = styled.Text`
-  position: absolute;
-  color: ${utils.colors.white};
+const BadgeText = styled.Text`
+  color: white;
   font-size: 12px;
 `;
 
-export default class Header extends React.Component {
-  render() {
-    return (
-      <HeaderWrapper style={utils.shadows.cropCardShadow}>
-        <IconToucableWrapper>
-          <MenuIconTouchable activeOpacity={0.5}>
-            <MenuIcon name="menu" size={37} />
-          </MenuIconTouchable>
-          <NotificationTouchable activeOpacity={0.5}>
-            <Notification name="bell" size={37} />
-            <BadgeWrapper>
-              <BadgeNumber>1</BadgeNumber>
-            </BadgeWrapper>
-          </NotificationTouchable>
-        </IconToucableWrapper>
-      </HeaderWrapper>
-    );
-  }
-}
+const WeatherForecast = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+
+const Image = styled.Image`
+  aspect-ratio: 1;
+  width: ${utils.resizer.getWidth(200)}px;
+  height: ${utils.resizer.getHeight(200)}px;
+`;
+
+const Column = styled.View`
+  flex: 1;
+  padding-vertical: 4px;
+  margin-left: 15px;
+  justify-content: space-between;
+`;
+
+const ForcastText = styled.Text`
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+const Header = ({cropSize, weatherDetail, mounted}) => {
+  const weatherCode = weatherDetail && weatherDetail.weather_code.value;
+  const weatherType = utils.weather.getWeatherCode(weatherCode);
+  // eslint-disable-next-line prettier/prettier
+  const weatherTemp = weatherDetail && weatherDetail.temp.value.toFixed() || 'Nan';
+  // eslint-disable-next-line prettier/prettier
+  const precipitationName = weatherCode && weatherCode.replace(/(^|_)./g, s => s.slice(-1).toUpperCase()) || 'NaN';
+
+  return (
+    <Container style={utils.shadows.cropCardShadow}>
+      <Wrapper>
+        <WeatherForecast>
+          {mounted ? (
+            <>
+              <Image source={weatherType} />
+              <Column>
+                <ForcastText>{`Temperature : ${weatherTemp} °C`}</ForcastText>
+                <ForcastText>{`Precipitation : ${precipitationName}`}</ForcastText>
+              </Column>
+            </>
+          ) : (
+            <ActivityIndicator
+              style={{marginLeft: 50, marginTop: 15}}
+              size="small"
+              color="black"
+            />
+          )}
+        </WeatherForecast>
+        <Notification>
+          <FontAwsome5 name="seedling" size={30} />
+          <BadgeWrapper>
+            <BadgeText>{cropSize}</BadgeText>
+          </BadgeWrapper>
+        </Notification>
+        <Notification>
+          <FontAwsome name="bell" size={30} />
+          <BadgeWrapper>
+            <BadgeText>1</BadgeText>
+          </BadgeWrapper>
+        </Notification>
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default Header;

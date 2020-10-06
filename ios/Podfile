@@ -81,6 +81,8 @@ target 'nu_farm_lot' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'nu_farm_lotTests' do
     inherit! :complete
     # Pods for testing

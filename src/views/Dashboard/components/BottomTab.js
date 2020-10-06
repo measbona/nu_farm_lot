@@ -1,59 +1,39 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
 
 import utils from '../../../utils';
-import Colors from '../../../utils/colors';
 
 const Wrapper = styled.View`
-  background-color: ${Colors.white};
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  background-color: ${utils.colors.lightGreen};
+  min-height: ${utils.devices.isNotch() ? 70 : 50}px;
+`;
+
+const Action = styled.View`
   flex-direction: row;
-  padding-horizontal: 25px;
-  padding-bottom: 10px;
-  height: 70px;
+  padding-horizontal: 20px;
+  padding-bottom: ${utils.devices.isNotch() ? 15 : 0}px;
+  justify-content: space-between;
 `;
 
-const EditButton = styled.TouchableOpacity``;
-
-const EditImage = styled.Image``;
-
-const AddButton = styled.TouchableOpacity`
-  padding-bottom: 49px;
-`;
-
-const AddImage = styled.Image``;
-
-const DeleteButton = styled.TouchableOpacity``;
-
-const DeleteImage = styled.Image``;
+const Touchable = styled.TouchableOpacity``;
 
 export default class BottomTab extends React.Component {
   render() {
-    const yellow = Colors.yellow;
     return (
-      <Wrapper style={utils.shadows.cropCardShadow}>
-        <EditButton activeOpacity={0.5}>
-          <EditImage source={require('../../../assets/icons/Edit/Edit.png')} />
-        </EditButton>
-        <AddButton activeOpacity={0.5}>
-          <AnimatedCircularProgress
-            rotation={72}
-            size={70}
-            width={10}
-            fill={60}
-            tintColor={yellow}>
-            {() => (
-              <AddImage source={require('../../../assets/icons/Add/Add.png')} />
-            )}
-          </AnimatedCircularProgress>
-        </AddButton>
-        <DeleteButton activeOpacity={0.5}>
-          <DeleteImage
-            source={require('../../../assets/icons/Trash/Trash.png')}
-          />
-        </DeleteButton>
+      <Wrapper>
+        <Action>
+          <Touchable>
+            <MDIcon name="edit" size={40} />
+          </Touchable>
+          <Touchable>
+            <MDIcon name="add-circle" size={40} />
+          </Touchable>
+          <Touchable>
+            <MDIcon name="delete" size={40} />
+          </Touchable>
+        </Action>
       </Wrapper>
     );
   }

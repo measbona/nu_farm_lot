@@ -48,7 +48,7 @@ export default class Done extends React.PureComponent {
         <AnimateImage
           source={require('../../assets/images/Done/Done.png')}
           animation="bounceIn"
-          iterationDelay={1000}
+          iterationDelay={200}
         />
         <LabelWrapper>
           <Label size={20}>Your're good to go</Label>

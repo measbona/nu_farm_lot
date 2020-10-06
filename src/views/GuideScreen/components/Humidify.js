@@ -1,72 +1,70 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-const Wrapper = styled.View`
+import utils from '../../../utils';
+
+const Container = styled.View`
   flex: 1;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  background-color: white;
 `;
 
-const BottomTexttWrapper = styled.View`
-  align-items: center;
+const TextWrapper = styled.View`
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   position: absolute;
-  padding-vertical: 40px;
-  bottom: 113px;
+  align-items: center;
+  padding-bottom: ${utils.resizer.getHeight(370)}px;
 `;
 
 const Text = styled.Text`
   font-size: ${props => props.size}px;
   font-weight: ${props => (props.weightFont ? 600 : 500)};
-  padding: 2px 0px 2px 0px;
 `;
 
 const ImageWrapper = styled.View`
   align-items: center;
-  bottom: 50px;
 `;
 
-const MultipleImageWrapper = styled.View`
+const ImageRowWrapper = styled.View`
+  align-self: stretch;
   flex-direction: row;
+  margin-horizontal: 50px;
+  justify-content: space-between;
 `;
 
-const Divider = styled.View`
-  padding: 0px 13px 0px 13px;
-`;
-
-const Image = styled.Image``;
-
-const Space = styled.View`
-  padding: 5px 0px 5px 0px;
+const Image = styled.Image`
+  aspect-ratio: 1;
+  width: ${utils.resizer.getWidth(550)}px;
+  height: ${utils.resizer.getHeight(550)}px;
 `;
 
 export default class Humidify extends React.PureComponent {
   render() {
     return (
-      <Wrapper>
+      <Container>
         <ImageWrapper>
           <Image
             source={require('../../../assets/images/Temperature/Temperature.png')}
           />
-          <MultipleImageWrapper>
+          <ImageRowWrapper>
             <Image
               source={require('../../../assets/images/WaterCup/WaterCup.png')}
             />
-            <Divider />
             <Image
               source={require('../../../assets/images/DropWater/DropWater.png')}
             />
-          </MultipleImageWrapper>
+          </ImageRowWrapper>
         </ImageWrapper>
-        <BottomTexttWrapper>
+        <TextWrapper>
           <Text size={23} weightFont>
             Detect your farm's humidify,
           </Text>
           <Text size={23}>temperature and flood</Text>
-          <Space />
-          <Text size={18}>In just a few simple steps</Text>
-        </BottomTexttWrapper>
-      </Wrapper>
+          <Text size={17}>In just a few simple steps</Text>
+        </TextWrapper>
+      </Container>
     );
   }
 }
