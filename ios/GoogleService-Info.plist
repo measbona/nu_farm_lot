@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>718105644553-pn26oqc99mhk2c7sihqi822modpi3asl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.718105644553-pn26oqc99mhk2c7sihqi822modpi3asl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>718105644553-124asp31h7br78d80audbj5oesj4emvg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDu8MQVfkyjMe4LH2cfOPMf65rsz-SykKs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>718105644553</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nu-farm-lot</string>
+	<key>PROJECT_ID</key>
+	<string>nu-farm-iot</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nu-farm-iot.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:718105644553:ios:a646c5ba2fe9877a3032d8</string>
+	<key>DATABASE_URL</key>
+	<string>https://nu-farm-iot.firebaseio.com</string>
+</dict>
+</plist>
