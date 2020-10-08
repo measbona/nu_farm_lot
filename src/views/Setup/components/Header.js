@@ -18,17 +18,14 @@ const Button = styled.TouchableOpacity`
 
 const Text = styled.Text`
   font-size: 25px;
-  font-weight: 600;
+  font-weight: bold;
   color: ${utils.colors.black};
 `;
 
 const Header = ({componentId}) => {
   return (
     <Wrapper>
-      <Button
-        onClick={() => popBack(componentId)}
-        activeOpacity={0.5}
-        style={utils.shadows.textShadow}>
+      <Button onPress={() => popBack(componentId)} activeOpacity={0.5}>
         <MDIcon
           name="keyboard-arrow-left"
           size={35}

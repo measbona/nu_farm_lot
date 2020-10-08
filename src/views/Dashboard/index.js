@@ -3,11 +3,13 @@ import {ActivityIndicator, ScrollView} from 'react-native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
+import firestore from '@react-native-firebase/firestore';
+import _ from 'lodash';
 
 import Geolocation from 'react-native-geolocation-service';
 
 import utils from '../../utils';
-import {showCropDetail} from '../../navigation/screen';
+import {showCropDetail, goToSetup} from '../../navigation/screen';
 
 import Header from './components/Header';
 import CropCard from './components/CropCard';
@@ -29,7 +31,7 @@ const Touchable = styled.TouchableOpacity`
   bottom: ${utils.devices.isNotch() ? 45 : 30}px;
 `;
 
-const Loading = styled.View`
+const Loading = styled.ActivityIndicator`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -41,11 +43,30 @@ export default class Dashboard extends React.Component {
     mounted: false,
     locationData: null,
     weatherDetail: null,
+    allCrops: [],
   };
 
   componentDidMount() {
     this.handleLocation();
+    this.fetchCrop();
   }
+
+  fetchCrop = async () => {
+    const data = {};
+    const dbRef = await firestore()
+      .collection('crops')
+      .get();
+
+    try {
+      dbRef.forEach(doc => {
+        data[doc.id] = {key: doc.id, ...doc.data()};
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    this.setState({allCrops: data});
+  };
 
   handleLocation = async () => {
     try {
@@ -81,61 +102,19 @@ export default class Dashboard extends React.Component {
   };
 
   render() {
-    const {editAction, mounted, weatherDetail} = this.state;
-
-    const CROPS_DATA = [
-      {
-        name: 'Tomato',
-        humandity: {
-          temperature: '28',
-          water_volume: '80',
-          water_capacity: '0.3',
-        },
-        image_name:
-          'https://www.hindimeaning.com/wp-content/uploads/2012/12/Tomato.jpg',
-      },
-      {
-        name: 'JackFruit',
-        humandity: {
-          temperature: '10',
-          water_volume: '90',
-          water_capacity: '0.1',
-        },
-        image_name:
-          'https://www.hindimeaning.com/wp-content/uploads/2015/08/Jackfruit.jpg',
-      },
-      {
-        name: 'Carrot',
-        humandity: {
-          temperature: '19',
-          water_volume: '100',
-          water_capacity: '0.5',
-        },
-        image_name:
-          'https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg',
-      },
-      {
-        name: 'Cucumber',
-        humandity: {
-          temperature: '24',
-          water_volume: '20',
-          water_capacity: '0.1',
-        },
-        image_name:
-          'https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg',
-      },
-    ];
+    const {editAction, mounted, weatherDetail, allCrops} = this.state;
+    const {componentId} = this.props;
 
     return (
       <DashboardAnimate animation="fadeIn">
         <Header
-          cropSize={CROPS_DATA.length}
+          cropSize={_.size(allCrops)}
           weatherDetail={weatherDetail}
           mounted={mounted}
         />
         {mounted ? (
           <ScrollView showsVerticalScrollIndicator={false}>
-            {CROPS_DATA.map((crop, key) => {
+            {_.map(allCrops, (crop, key) => {
               return (
                 <CropCard
                   key={key}
@@ -143,20 +122,20 @@ export default class Dashboard extends React.Component {
                   onLongPress={value => this.setState({editAction: !value})}
                   onCropPress={this.handleOnCropPress}
                   editAction={editAction}
+                  componentId={componentId}
                 />
               );
             })}
           </ScrollView>
         ) : (
-          <Loading>
-            <ActivityIndicator size="large" color={utils.colors.lightGreen} />
-          </Loading>
+          <Loading size="large" color={utils.colors.lightGreen} />
         )}
+
         {editAction && (
           <AddButton>
             <Touchable
               activeOpacity={0.5}
-              onPress={() => alert('Add')}
+              onPress={() => goToSetup(componentId)}
               hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
               <MDIcon name="add-circle-outline" size={45} />
             </Touchable>

@@ -24,12 +24,12 @@ const Text = styled.Text`
 export default class Header extends React.PureComponent {
   render() {
     const {componentId, crop} = this.props;
+    const image =
+      {uri: crop.image_url} ||
+      require('../../../assets/images/placeholder.png');
 
     return (
-      <Wrapper
-        source={{
-          uri: `${crop.image_name}`,
-        }}>
+      <Wrapper source={image}>
         <Button
           activeOpacity={0.5}
           style={utils.shadows.textShadow}

@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert} from 'react-native';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import {goToSetup} from '../../../navigation/screen';
 
 import utils from '../../../utils';
 
@@ -52,42 +53,21 @@ const Image = styled.Image`
 `;
 
 export default class CropCards extends React.Component {
-  handleAction = value => {
-    if (value === 'edit') {
-      Alert.alert(
-        'Are you sure you want to edit?',
-        '',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'Watering Schedule', onPress: () => console.log('OK Pressed')},
-          {text: 'Smart Alert', onPress: () => console.log('OK Pressed')},
-        ],
-        {cancelable: false},
-      );
-    }
-    if (value === 'delete') {
-      Alert.alert(
-        'Are you sure you want to delete?',
-        '',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        {cancelable: false},
-      );
-    }
+  onDeletePress = () => {
+    return null;
   };
 
   render() {
-    const {onLongPress, editAction, onCropPress, crop} = this.props;
+    const {
+      onLongPress,
+      editAction,
+      onCropPress,
+      crop,
+      componentId,
+    } = this.props;
+    const image =
+      {uri: crop.image_url} ||
+      require('../../../assets/images/placeholder.png');
 
     return (
       <Container
@@ -102,24 +82,20 @@ export default class CropCards extends React.Component {
               <ActionWrapper>
                 <Touchable
                   activeOpacity={0.5}
-                  onPress={() => this.handleAction('edit')}
+                  onPress={() => goToSetup(componentId, {action: 'edit', crop})}
                   hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
                   <MDIcon name="edit" size={30} />
                 </Touchable>
                 <Touchable
                   activeOpacity={0.5}
-                  onPress={() => this.handleAction('delete')}
+                  onPress={this.onDeletePress}
                   hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
                   <MDIcon name="delete" size={30} />
                 </Touchable>
               </ActionWrapper>
             ) : null}
           </LabelWrapper>
-          <Image
-            source={{
-              uri: `${crop.image_name}`,
-            }}
-          />
+          <Image source={image} />
         </Content>
       </Container>
     );

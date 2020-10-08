@@ -1,7 +1,15 @@
 import React from 'react';
-import {TouchableOpacity, Platform} from 'react-native';
+import {
+  TouchableOpacity,
+  Platform,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import styled from 'styled-components/native';
+import storage from '@react-native-firebase/storage';
+import ImageResizer from 'react-native-image-resizer';
+import {popBack} from '../../navigation/screen';
 
 import Header from './components/Header';
 import utils from '../../utils';
@@ -43,7 +51,7 @@ const TextInputWrapper = styled.View`
 `;
 
 const Text = styled.Text`
-  font-weight: 600;
+  font-weight: bold;
   font-size: ${props => props.fontSize}px;
   ${props => props.color && `color: ${props.color}`}
   ${props => props.margin && `margin: 0px 0px 10px 5px`};
@@ -80,16 +88,25 @@ const KeyboardAvoidingView = styled.KeyboardAvoidingView`
   bottom: ${utils.resizer.getHeight(200)}px;
 `;
 
-const Invisible = styled.View`
-  padding-top: ${utils.devices.devicePaddingTop}px;
-  min-height: ${utils.devices.isNotch() ? 70 : 50}px;
-`;
-
 export default class Setup extends React.PureComponent {
   state = {
     cropName: '',
     cropImage: null,
+    cropUri: '',
+    loading: false,
   };
+
+  componentDidMount() {
+    const {action, crop} = this.props;
+
+    if (action === 'edit') {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({
+        cropName: crop.name,
+        cropUri: crop.image_url,
+      });
+    }
+  }
 
   selectFile = () => {
     const options = {
@@ -100,36 +117,70 @@ export default class Setup extends React.PureComponent {
       },
     };
 
-    ImagePicker.showImagePicker(options, res => {
-      console.log('Response = ', res);
-
+    ImagePicker.showImagePicker(options, async res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
         console.log('ImagePicker Error: ', res.error);
       } else {
-        let source = res;
+        let compressedImage = await this.resize(res);
         this.setState({
-          cropImage: source,
+          cropImage: compressedImage,
+          cropUri: compressedImage.uri,
         });
       }
     });
   };
 
-  render() {
+  resize = data => {
+    return new Promise((resolve, reject) => {
+      ImageResizer.createResizedImage(data.uri, 360, 640, 'PNG', 100, 0)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  };
+
+  uploadImage = async () => {
     const {cropImage, cropName} = this.state;
-    const {action, componentId} = this.props;
+    const {componentId} = this.props;
+
+    this.setState({loading: true});
+    const {uri} = cropImage;
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+
+    const task = storage()
+      .ref(`crop_images/${cropName}`)
+      .putFile(uploadUri);
+
+    try {
+      await task;
+      this.setState({loading: false});
+    } catch (e) {
+      Alert.alert(
+        'Fail Saving',
+        'You data is fail to process. Please try again!',
+      );
+    }
+
+    popBack(componentId);
+  };
+
+  render() {
+    const {cropName, loading, cropUri} = this.state;
+    const {componentId, action} = this.props;
 
     const image =
-      cropImage || require('../../assets/images/crop_placeholder.jpg');
+      action === 'edit'
+        ? {uri: cropUri}
+        : require('../../assets/images/crop_placeholder.jpg');
 
     return (
       <React.Fragment>
-        {action === 'new' ? (
-          <Header componentId={componentId} />
-        ) : (
-          <Invisible />
-        )}
+        <Header componentId={componentId} />
         <Container>
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}>
             <ImageWrapper>
@@ -147,7 +198,10 @@ export default class Setup extends React.PureComponent {
                 Crop Name
               </Text>
               <TextInput
-                placeholder="Input your crop name ...."
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="eg. Carrot"
+                value={cropName}
                 onChangeText={value => this.setState({cropName: value})}
               />
             </TextInputWrapper>
@@ -155,10 +209,15 @@ export default class Setup extends React.PureComponent {
           <Button
             activeOpacity={0.7}
             disabled={cropName.length === 0}
+            onPress={this.uploadImage}
             cropName={cropName}>
-            <Text fontSize={20} color={utils.colors.white}>
-              Save
-            </Text>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Text fontSize={20} color={utils.colors.white}>
+                {action === 'edit' ? 'Update' : 'Save'}
+              </Text>
+            )}
           </Button>
         </Container>
       </React.Fragment>
