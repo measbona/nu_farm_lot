@@ -1,10 +1,10 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
-import MDIcon from 'react-native-vector-icons/MaterialIcons';
-import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
-import firestore from '@react-native-firebase/firestore';
 import _ from 'lodash';
+import * as Animatable from 'react-native-animatable';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore';
 
 import Geolocation from 'react-native-geolocation-service';
 
@@ -41,11 +41,11 @@ export default class Dashboard extends React.Component {
   };
 
   componentDidMount() {
-    this.handleWeather();
-    this.fetchCrop();
+    this.getWeatherInfo();
+    this.fetchCrops();
   }
 
-  fetchCrop = async () => {
+  fetchCrops = async () => {
     const data = {};
     const dbRef = await firestore()
       .collection('crops')
@@ -62,7 +62,19 @@ export default class Dashboard extends React.Component {
     this.setState({allCrops: data});
   };
 
-  handleWeather = async () => {
+  getLatLngLocation = () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(location => resolve(location.coords)),
+        () => reject(new Error('LOCATION')),
+        {
+          maximumAge: 0,
+          timeout: 20000,
+          enableHighAccuracy: true,
+        };
+    });
+  };
+
+  getWeatherInfo = async () => {
     try {
       const location = await this.getLatLngLocation();
 
@@ -77,18 +89,6 @@ export default class Dashboard extends React.Component {
     } catch (error) {
       this.setState({mounted: false});
     }
-  };
-
-  getLatLngLocation = () => {
-    return new Promise((resolve, reject) => {
-      Geolocation.getCurrentPosition(location => resolve(location.coords)),
-        () => reject(new Error('LOCATION')),
-        {
-          maximumAge: 0,
-          timeout: 20000,
-          enableHighAccuracy: true,
-        };
-    });
   };
 
   handleOnCropPress = crop => {

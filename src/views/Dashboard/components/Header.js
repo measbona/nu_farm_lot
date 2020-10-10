@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
 import FontAwsome from 'react-native-vector-icons/FontAwesome';
@@ -69,9 +70,9 @@ const Header = ({cropSize, weatherDetail, mounted}) => {
   const weatherCode = weatherDetail && weatherDetail.weather_code.value;
   const weatherType = utils.weather.getWeatherCode(weatherCode);
   // eslint-disable-next-line prettier/prettier
-  const weatherTemp = weatherDetail && weatherDetail.temp.value.toFixed() || 'Nan';
+  const weatherTemp = weatherDetail && weatherDetail.temp.value.toFixed() || 'NaN';
   // eslint-disable-next-line prettier/prettier
-  const precipitationName = weatherCode && weatherCode.replace(/(^|_)./g, s => s.slice(-1).toUpperCase()) || 'NaN';
+  const precipitationName = weatherCode && _.startCase(weatherCode) || 'NaN';
 
   return (
     <Container style={utils.shadows.cropCardShadow}>
