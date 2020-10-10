@@ -1,120 +1,136 @@
 import React from 'react';
-import {FlatList} from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import {ScrollView} from 'react-native';
 import styled from 'styled-components/native';
+import _ from 'lodash';
+import * as Animatable from 'react-native-animatable';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore';
+
+import Geolocation from 'react-native-geolocation-service';
 
 import utils from '../../utils';
+import {showCropDetail, goToSetup} from '../../navigation/screen';
 
 import Header from './components/Header';
 import CropCard from './components/CropCard';
-import BottomTab from './components/BottomTab';
 
 const Wrapper = styled.View`
   flex: 1;
-  justify-content: space-between;
+  background-color: white;
 `;
 
 const DashboardAnimate = Animatable.createAnimatableComponent(Wrapper);
 
-const DashboardInfo = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+const AddButton = styled.View`
   align-items: center;
-  margin-horizontal: 20px;
-  margin-top: 10px;
-  margin-bottom: 5px;
 `;
 
-const BoardName = styled.Text`
-  font-size: 30px;
-  font-weight: 600;
-  color: ${utils.colors.darkGreen};
-`;
-
-const Total = styled.Text`
-  font-size: 23px;
-  font-weight: 500;
-  color: ${utils.colors.darkGreen};
+const Touchable = styled.TouchableOpacity`
+  position: absolute;
+  align-items: center;
+  bottom: ${utils.devices.isNotch() ? 45 : 30}px;
 `;
 
 export default class Dashboard extends React.Component {
   state = {
-    crop: null,
-    edit: false,
-    destroy: false,
+    editAction: false,
+    mounted: false,
+    locationData: null,
+    weatherDetail: null,
+    allCrops: [],
   };
 
-  renderCrop = ({item}) => {
-    const {edit, destroy} = this.state;
-    const {componentId} = this.props;
+  componentDidMount() {
+    this.getWeatherInfo();
+    this.fetchCrops();
+  }
 
-    return (
-      <CropCard
-        crop={item}
-        componentId={componentId}
-        onCropPress={eachCrop => this.setState({crop: eachCrop})}
-        edit={edit}
-        destroy={destroy}
-      />
-    );
+  fetchCrops = async () => {
+    const data = {};
+    const dbRef = await firestore()
+      .collection('crops')
+      .get();
+
+    try {
+      dbRef.forEach(doc => {
+        data[doc.id] = {key: doc.id, ...doc.data()};
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    this.setState({allCrops: data});
+  };
+
+  getLatLngLocation = () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(location => resolve(location.coords)),
+        () => reject(new Error('LOCATION')),
+        {
+          maximumAge: 0,
+          timeout: 20000,
+          enableHighAccuracy: true,
+        };
+    });
+  };
+
+  getWeatherInfo = async () => {
+    try {
+      const location = await this.getLatLngLocation();
+
+      const latitude = location.latitude;
+      const longitude = location.longitude;
+      const url = `https://api.climacell.co/v3/weather/realtime?lat=${latitude}&lon=${longitude}&unit_system=si&fields=temp%2Cprecipitation_type%2Cweather_code&apikey=FO1ZtXa5NiFrUBTPLEJ6hIfDrj1iG06g`;
+
+      const fetchWeather = await fetch(url);
+      const resJson = await fetchWeather.json();
+
+      this.setState({weatherDetail: resJson, mounted: true});
+    } catch (error) {
+      this.setState({mounted: false});
+    }
+  };
+
+  handleOnCropPress = crop => {
+    showCropDetail({crop});
   };
 
   render() {
-    const {edit, destroy} = this.state;
+    const {editAction, mounted, weatherDetail, allCrops} = this.state;
     const {componentId} = this.props;
 
-    const CROPS_DATA = [
-      {
-        id: '1',
-        crop_name: 'Tomato',
-        land_size: '20',
-        humandity: {
-          temperature: '28',
-          water_volume: '80',
-          water_capacity: '0.3',
-        },
-      },
-      {
-        id: '2',
-        crop_name: 'Grape',
-        land_size: '30',
-        humandity: {
-          temperature: '25',
-          water_volume: '50',
-          water_capacity: '0.1',
-        },
-      },
-      {
-        id: '3',
-        crop_name: 'Sugar Cane',
-        land_size: '40',
-        humandity: {
-          temperature: '30',
-          water_volume: '80',
-          water_capacity: '0.7',
-        },
-      },
-    ];
     return (
       <DashboardAnimate animation="fadeIn">
-        <Header />
-        <DashboardInfo>
-          <BoardName>Farm Overview</BoardName>
-          <Total>{'Total: ' + CROPS_DATA.length}</Total>
-        </DashboardInfo>
-        <FlatList
-          data={CROPS_DATA}
-          renderItem={this.renderCrop}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
+        <Header
+          cropSize={_.size(allCrops)}
+          weatherDetail={weatherDetail}
+          mounted={mounted}
         />
-        <BottomTab
-          onDestroyChange={data => this.setState({destroy: data})}
-          onEditChange={data => this.setState({edit: data})}
-          edit={edit}
-          destroy={destroy}
-          componentId={componentId}
-        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {_.map(allCrops, (crop, key) => {
+            return (
+              <CropCard
+                key={key}
+                crop={crop}
+                onLongPress={value => this.setState({editAction: !value})}
+                onCropPress={this.handleOnCropPress}
+                editAction={editAction}
+                componentId={componentId}
+              />
+            );
+          })}
+        </ScrollView>
+
+        {editAction && (
+          <AddButton>
+            <Touchable
+              activeOpacity={0.5}
+              onPress={() => goToSetup(componentId, {action: 'save'})}
+              hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
+              <MDIcon name="add-circle-outline" size={45} />
+            </Touchable>
+          </AddButton>
+        )}
       </DashboardAnimate>
     );
   }

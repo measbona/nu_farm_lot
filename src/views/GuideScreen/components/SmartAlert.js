@@ -1,50 +1,49 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import MDIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {goToSelectFarm} from '../../../navigation/screen';
+import {goToDashboard} from '../../../navigation/screen';
+import utils from '../../../utils';
 
 const Wrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  position: relative;
-`;
-
-const BottomTexttWrapper = styled.View`
-  align-items: center;
-  position: absolute;
-  padding-vertical: 40px;
-  bottom: 118px;
-`;
-
-const Text = styled.Text`
-  font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
-  padding: 2px 0px 2px 0px;
+  background-color: white;
 `;
 
 const ImageWrapper = styled.View`
   align-items: center;
-  bottom: 40px;
 `;
 
-const Image = styled.Image``;
-
-const Divider = styled.View`
-  padding: 5px 0px 5px 0px;
-`;
-
-const StartButton = styled.TouchableOpacity`
-  flex-direction: row;
+const ContentWrapper = styled.View`
+  left: 0;
+  right: 0;
+  margin-top: 20px;
   position: absolute;
-  justify-content: center;
-  bottom: 90px;
+  align-items: center;
+  bottom: ${utils.resizer.getHeight(380)}px;
 `;
 
-const MDIcons = styled(MDIcon)`
+const Text = styled.Text`
+  font-weight: bold;
+  font-size: ${props => props.size}px;
+  ${props => props.whiteColor && `color: white`}
+`;
+
+const Image = styled.Image`
+  aspect-ratio: 1;
+  width: ${utils.resizer.getWidth(930)}px;
+  height: ${utils.resizer.getHeight(930)}px;
+`;
+
+const Button = styled.TouchableOpacity`
   position: absolute;
-  left: 115px;
+  align-items: center;
+  border-radius: 50px;
+  padding-vertical: 13px;
+  background-color: rgba(124, 199, 81, 1);
+  width: ${utils.devices.screenWidth - 64}px;
+  bottom: ${utils.resizer.getHeight(100)}px;
 `;
 
 export default class SmartAlert extends React.PureComponent {
@@ -56,21 +55,19 @@ export default class SmartAlert extends React.PureComponent {
             source={require('../../../assets/images/PowerfulSensor/PowerfulSensor.png')}
           />
         </ImageWrapper>
-        <BottomTexttWrapper>
-          <Text size={23} weightFont>
-            Smart Alert
-          </Text>
-          <Divider />
-          <Text size={18}>Powerful sensor that can inform you</Text>
-          <Text size={18}>all you need to know about your farm</Text>
-        </BottomTexttWrapper>
-        <StartButton
+        <ContentWrapper>
+          <Text size={23}>Smart Alert</Text>
+          <Text size={17}>Powerful sensor that can inform you</Text>
+          <Text size={17}>all you need to know about your farm</Text>
+        </ContentWrapper>
+        <Button
           activeOpacity={0.5}
           hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-          onPress={() => goToSelectFarm(this.props.componentId)}>
-          <Text size={23}>Get Started</Text>
-          <MDIcons name="keyboard-arrow-right" size={35} />
-        </StartButton>
+          onPress={() => goToDashboard(this.props.componentId)}>
+          <Text whiteColor size={20}>
+            Get Started
+          </Text>
+        </Button>
       </Wrapper>
     );
   }

@@ -1,119 +1,102 @@
 import React from 'react';
-import {Alert} from 'react-native';
 import styled from 'styled-components/native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/MaterialIcons';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import {goToSetup} from '../../../navigation/screen';
 
 import utils from '../../../utils';
 
-import CropInfo from './CropInfo';
-import Humandity from './Humandity';
-
-import {showCropDetail} from '../../../navigation/screen';
-
-const Wrapper = styled.TouchableOpacity`
-  padding-top: 12px;
+const Container = styled.TouchableOpacity`
+  margin-top: 15px;
+  align-items: center;
 `;
 
-const CropCard = styled.View`
-  justify-content: space-between;
-  background-color: ${utils.colors.white};
-  height: 200px;
-  margin-horizontal: 16px;
-  padding-vertical: 15px;
-  border-radius: 40px;
+const Content = styled.View`
+  border-radius: 10px;
+  background-color: white;
+  width: ${utils.devices.screenWidth - 30}px;
+  height: ${utils.devices.isIphoneX ? 165 : 162}px;
 `;
 
-const Line = styled.View`
-  border-width: 1px;
-  margin-horizontal: 16px;
-  border-color: ${utils.colors.border};
+const LabelWrapper = styled.View`
+  padding: 15px;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: ${utils.colors.lightGreen};
 `;
 
-const BadgeEdit = styled.TouchableOpacity`
-  position: absolute;
+const CropLabel = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const ActionWrapper = styled.View`
   right: 0px;
+  position: absolute;
+  flex-direction: row;
+`;
+
+const Touchable = styled.TouchableOpacity`
+  margin-horizontal: 10px;
+`;
+
+const Image = styled.Image`
+  flex: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: ${utils.devices.screenWidth - 30}px;
+  height: ${utils.devices.isIphoneX ? 165 : 162}px;
 `;
 
 export default class CropCards extends React.Component {
-  handleCropData = crop => {
-    const {componentId} = this.props;
-
-    this.props.onCropPress(crop);
-    showCropDetail({
-      crop,
-      componentId,
-    });
-  };
-
-  alert = () => {
-    const {edit, crop} = this.props;
-
-    if (edit) {
-      Alert.alert(
-        'Are you sure you want to edit?',
-        `${crop.crop_name}`,
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'Area', onPress: () => console.log('OK Pressed')},
-          {text: 'Watering Schedule', onPress: () => console.log('OK Pressed')},
-          {text: 'Smart Alert', onPress: () => console.log('OK Pressed')},
-        ],
-        {cancelable: false},
-      );
-    }
-
-    Alert.alert(
-      'Are you sure you want to delete?',
-      `${crop.crop_name}`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
-    );
+  onDeletePress = () => {
+    return null;
   };
 
   render() {
-    const {edit, destroy} = this.props;
+    const {
+      onLongPress,
+      editAction,
+      onCropPress,
+      crop,
+      componentId,
+    } = this.props;
+    const image =
+      {uri: crop.image_url} ||
+      require('../../../assets/images/placeholder.png');
+
     return (
-      <Wrapper
+      <Container
         activeOpacity={0.5}
-        onPress={() => this.handleCropData(this.props.crop)}>
-        <CropCard style={utils.shadows.cropCardShadow}>
-          <CropInfo {...this.props} />
-          <Line />
-          <Humandity {...this.props} />
-          {(edit || destroy) && (
-            <BadgeEdit
-              activeOpacity={0.5}
-              hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-              onPress={() => this.alert()}>
-              {edit ? (
-                <Ionicons
-                  name="settings"
-                  size={35}
-                  color={utils.colors.setting}
-                />
-              ) : (
-                <AntDesign
-                  name="closecircle"
-                  size={30}
-                  color={utils.colors.red}
-                />
-              )}
-            </BadgeEdit>
-          )}
-        </CropCard>
-      </Wrapper>
+        style={utils.shadows.cropCardShadow}
+        onPress={() => onCropPress(crop)}
+        onLongPress={() => onLongPress(editAction)}>
+        <Content>
+          <LabelWrapper>
+            <CropLabel>{crop.name}</CropLabel>
+            {editAction ? (
+              <ActionWrapper>
+                <Touchable
+                  activeOpacity={0.5}
+                  onPress={() => goToSetup(componentId, {action: 'edit', crop})}
+                  hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
+                  <MDIcon name="edit" size={30} />
+                </Touchable>
+                <Touchable
+                  activeOpacity={0.5}
+                  onPress={this.onDeletePress}
+                  hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
+                  <MDIcon name="delete" size={30} />
+                </Touchable>
+              </ActionWrapper>
+            ) : null}
+          </LabelWrapper>
+          <Image source={image} />
+        </Content>
+      </Container>
     );
   }
 }

@@ -6,48 +6,40 @@ import utils from '../../../utils';
 
 const Wrapper = styled.View`
   flex: 1;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  background-color: white;
 `;
 
 const Animation = Animatable.createAnimatableComponent(Wrapper);
 
-const ProfileWrapper = styled.View`
-  padding-bottom: 10px;
+const ProfileAndImageWrapper = styled.View`
+  align-items: center;
 `;
-
-const TopTextWrapper = styled.View`
-  padding-bottom: 20px;
-`;
-
-const Profile = styled.Image``;
 
 const TexttWrapper = styled.View`
-  align-items: center;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   position: absolute;
-  padding-vertical: 40px;
-  bottom: 160px;
+  align-items: center;
+  bottom: ${utils.resizer.getHeight(470)}px;
 `;
 
 const Text = styled.Text`
+  font-weight: bold;
   font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 
 const ImageWrapper = styled.View`
-  background-color: ${utils.colors.orange};
   border-radius: 360px;
+  padding: ${utils.resizer.getWidth(200)}px;
+  background-color: ${utils.colors.orange};
 `;
 
 const Image = styled.Image`
-  margin-vertical: 40px;
-  margin-horizontal: 40px;
-`;
-
-const ProfileAndImageWrapper = styled.View`
-  align-items: center;
-  bottom: 80px;
+  aspect-ratio: 1;
+  width: ${utils.resizer.getWidth(630)}px;
+  height: ${utils.resizer.getHeight(630)}px;
 `;
 
 export default class Farmer extends React.PureComponent {
@@ -55,16 +47,6 @@ export default class Farmer extends React.PureComponent {
     return (
       <Animation animation="fadeIn">
         <ProfileAndImageWrapper>
-          <ProfileWrapper>
-            <Profile
-              source={require('../../../assets/icons/profile/profile.png')}
-            />
-          </ProfileWrapper>
-          <TopTextWrapper>
-            <Text size={27} weightFont>
-              Hey, Siekchhor
-            </Text>
-          </TopTextWrapper>
           <ImageWrapper>
             <Image
               source={require('../../../assets/images/Farmer/Farmer.png')}
@@ -72,8 +54,8 @@ export default class Farmer extends React.PureComponent {
           </ImageWrapper>
         </ProfileAndImageWrapper>
         <TexttWrapper>
-          <Text size={23}>Welcome to NU Farm LoT</Text>
-          <Text size={18}>Enhance farmer with technology</Text>
+          <Text size={23}>Welcome to NU Farm IoT</Text>
+          <Text size={17}>Enhance farmer with technology</Text>
         </TexttWrapper>
       </Animation>
     );

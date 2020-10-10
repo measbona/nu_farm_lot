@@ -1,35 +1,35 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import utils from '../../../utils';
+
 const Wrapper = styled.View`
   flex: 1;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  background-color: white;
 `;
 
-const BottomTexttWrapper = styled.View`
-  align-items: center;
+const TextWrapper = styled.View`
+  left: 0px;
+  right: 0px;
   position: absolute;
-  padding-vertical: 40px;
-  bottom: 118px;
+  align-items: center;
+  bottom: ${utils.resizer.getHeight(390)}px;
 `;
 
 const Text = styled.Text`
   font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
-  padding: 2px 0px 2px 0px;
+  font-weight: bold;
 `;
 
 const ImageWrapper = styled.View`
   align-items: center;
-  bottom: 40px;
 `;
 
-const Image = styled.Image``;
-
-const Divider = styled.View`
-  padding: 5px 0px 5px 0px;
+const Image = styled.Image`
+  aspect-ratio: 1;
+  width: ${utils.resizer.getWidth(930)}px;
+  height: ${utils.resizer.getHeight(930)}px;
 `;
 
 export default class ScheduleWatering extends React.PureComponent {
@@ -41,12 +41,11 @@ export default class ScheduleWatering extends React.PureComponent {
             source={require('../../../assets/images/ScheduleWatering/ScheduleWatering.png')}
           />
         </ImageWrapper>
-        <BottomTexttWrapper>
-          <Text size={23} weightFont>Schedule Watering</Text>
-          <Divider />
-          <Text size={18}>Smart System that works perfectly</Text>
-          <Text size={18}>for watering your farm as you want</Text>
-        </BottomTexttWrapper>
+        <TextWrapper>
+          <Text size={23}>Schedule Watering</Text>
+          <Text size={17}>Smart System that works perfectly</Text>
+          <Text size={17}>for watering your farm as you want</Text>
+        </TextWrapper>
       </Wrapper>
     );
   }
