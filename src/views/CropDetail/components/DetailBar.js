@@ -17,7 +17,7 @@ const TextWrapper = styled.View`
 `;
 
 const VolumnText = styled.Text`
-  font-weight: 600;
+  font-weight: bold;
   color: ${props => props.textColor};
 `;
 

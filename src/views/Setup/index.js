@@ -5,12 +5,13 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import {popBack} from '../../navigation/screen';
 
+import {popBack} from '../../navigation/screen';
 import Header from './components/Header';
 import utils from '../../utils';
 
@@ -76,7 +77,7 @@ const Button = styled.TouchableOpacity`
     124,
     199,
     81,
-    ${props => (props.cropName.length === 0 ? 0.5 : 1)}
+    ${props => (props.disabledButton ? 0.5 : 1)}
   );
   bottom: ${utils.resizer.getHeight(100)}px;
   width: ${utils.devices.screenWidth - 64}px;
@@ -108,6 +109,18 @@ export default class Setup extends React.PureComponent {
     }
   }
 
+  resize = data => {
+    return new Promise((resolve, reject) => {
+      ImageResizer.createResizedImage(data.uri, 360, 640, 'PNG', 100, 0)
+        .then(response => {
+          resolve(response);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  };
+
   selectFile = () => {
     const options = {
       title: 'Select Image',
@@ -132,54 +145,67 @@ export default class Setup extends React.PureComponent {
     });
   };
 
-  resize = data => {
-    return new Promise((resolve, reject) => {
-      ImageResizer.createResizedImage(data.uri, 360, 640, 'PNG', 100, 0)
-        .then(response => {
-          resolve(response);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    });
-  };
-
-  uploadImage = async () => {
+  onSave = async () => {
     const {cropImage, cropName} = this.state;
-    const {componentId} = this.props;
+    const {crop, componentId, action} = this.props;
 
     this.setState({loading: true});
-    const {uri} = cropImage;
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-
-    const task = storage()
-      .ref(`crop_images/${cropName}`)
-      .putFile(uploadUri);
+    const dbRef = firestore().collection('crops');
+    const imageRef = storage().ref(`crop_images/${cropName}`);
 
     try {
-      await task;
-      this.setState({loading: false});
-    } catch (e) {
+      if (action === 'edit') {
+        if (cropImage) {
+          const uploadUri =
+            Platform.OS === 'ios'
+              ? cropImage.uri.replace('file://', '')
+              : cropImage.uri;
+
+          await imageRef.putFile(uploadUri);
+
+          const getImageUrl = await imageRef.getDownloadURL();
+
+          await dbRef
+            .doc(crop.key)
+            .update({name: cropName, image_url: getImageUrl});
+          this.setState({cropUri: getImageUrl});
+        } else {
+          await dbRef.doc(crop.key).update({name: cropName});
+        }
+      } else {
+        const uploadUri =
+          Platform.OS === 'ios'
+            ? cropImage.uri.replace('file://', '')
+            : cropImage.uri;
+
+        const task = storage()
+          .ref(`crop_images/${cropName}`)
+          .putFile(uploadUri);
+
+        await task;
+      }
+    } catch (err) {
       Alert.alert(
-        'Fail Saving',
-        'You data is fail to process. Please try again!',
+        'Saving Fail',
+        'Please Check Internet Connection and Try Again',
       );
     }
 
-    popBack(componentId);
+    this.setState({loading: false}, () => popBack(componentId));
   };
 
   render() {
-    const {cropName, loading, cropUri} = this.state;
+    const {cropName, loading, cropUri, cropImage} = this.state;
     const {componentId, action} = this.props;
 
+    const disabledButton = cropName.length === 0 || loading;
     const image =
       action === 'edit'
         ? {uri: cropUri}
-        : require('../../assets/images/crop_placeholder.jpg');
+        : cropImage || require('../../assets/images/crop_placeholder.jpg');
 
     return (
-      <React.Fragment>
+      <>
         <Header componentId={componentId} />
         <Container>
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' && 'padding'}>
@@ -208,11 +234,11 @@ export default class Setup extends React.PureComponent {
           </KeyboardAvoidingView>
           <Button
             activeOpacity={0.7}
-            disabled={cropName.length === 0}
-            onPress={this.uploadImage}
-            cropName={cropName}>
+            disabled={cropName.length === 0 || loading}
+            onPress={this.onSave}
+            disabledButton={disabledButton}>
             {loading ? (
-              <ActivityIndicator />
+              <ActivityIndicator color={utils.colors.white} />
             ) : (
               <Text fontSize={20} color={utils.colors.white}>
                 {action === 'edit' ? 'Update' : 'Save'}
@@ -220,7 +246,7 @@ export default class Setup extends React.PureComponent {
             )}
           </Button>
         </Container>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -11,14 +11,14 @@ const Wrapper = styled.ImageBackground`
 
 const Button = styled.TouchableOpacity`
   margin-top: 16px;
-  flex-direction: row;
   align-items: center;
+  flex-direction: row;
 `;
 
 const Text = styled.Text`
   font-size: 25px;
-  font-weight: 600;
-  color: ${utils.colors.black};
+  font-weight: bold;
+  color: ${utils.colors.orange};
 `;
 
 export default class Header extends React.PureComponent {
@@ -30,14 +30,11 @@ export default class Header extends React.PureComponent {
 
     return (
       <Wrapper source={image}>
-        <Button
-          activeOpacity={0.5}
-          style={utils.shadows.textShadow}
-          onPress={() => dismissModal(componentId)}>
+        <Button activeOpacity={0.5} onPress={() => dismissModal(componentId)}>
           <MDIcon
             name="keyboard-arrow-left"
             size={35}
-            color={utils.colors.black}
+            color={utils.colors.orange}
           />
           <Text>{crop.name}</Text>
         </Button>

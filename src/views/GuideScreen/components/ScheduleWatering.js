@@ -12,15 +12,14 @@ const Wrapper = styled.View`
 const TextWrapper = styled.View`
   left: 0px;
   right: 0px;
-  bottom: 0px;
   position: absolute;
   align-items: center;
-  padding-bottom: ${utils.resizer.getHeight(400)}px;
+  bottom: ${utils.resizer.getHeight(390)}px;
 `;
 
 const Text = styled.Text`
   font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
+  font-weight: bold;
 `;
 
 const ImageWrapper = styled.View`
@@ -43,9 +42,7 @@ export default class ScheduleWatering extends React.PureComponent {
           />
         </ImageWrapper>
         <TextWrapper>
-          <Text size={23} weightFont>
-            Schedule Watering
-          </Text>
+          <Text size={23}>Schedule Watering</Text>
           <Text size={17}>Smart System that works perfectly</Text>
           <Text size={17}>for watering your farm as you want</Text>
         </TextWrapper>

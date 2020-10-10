@@ -19,19 +19,20 @@ const TextWrapper = styled.View`
 `;
 
 const Text = styled.Text`
+  font-weight: bold;
   font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 
 const ImageWrapper = styled.View`
   align-items: center;
+  justify-content: center;
 `;
 
-const ImageRowWrapper = styled.View`
-  align-self: stretch;
+const IconWrapper = styled.View`
   flex-direction: row;
   margin-horizontal: 50px;
-  justify-content: space-between;
+  ${props => props.row && `align-self: stretch`};
+  ${props => props.row && `justify-content: space-between`};
 `;
 
 const Image = styled.Image`
@@ -45,22 +46,22 @@ export default class Humidify extends React.PureComponent {
     return (
       <Container>
         <ImageWrapper>
-          <Image
-            source={require('../../../assets/images/Temperature/Temperature.png')}
-          />
-          <ImageRowWrapper>
+          <IconWrapper>
+            <Image
+              source={require('../../../assets/images/Temperature/Temperature.png')}
+            />
+          </IconWrapper>
+          <IconWrapper row>
             <Image
               source={require('../../../assets/images/WaterCup/WaterCup.png')}
             />
             <Image
               source={require('../../../assets/images/DropWater/DropWater.png')}
             />
-          </ImageRowWrapper>
+          </IconWrapper>
         </ImageWrapper>
         <TextWrapper>
-          <Text size={23} weightFont>
-            Detect your farm's humidify,
-          </Text>
+          <Text size={23}>Detect your farm's humidify,</Text>
           <Text size={23}>temperature and flood</Text>
           <Text size={17}>In just a few simple steps</Text>
         </TextWrapper>

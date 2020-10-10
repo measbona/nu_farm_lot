@@ -62,7 +62,7 @@ const Column = styled.View`
 
 const ForcastText = styled.Text`
   font-size: 15px;
-  font-weight: 600;
+  font-weight: bold;
 `;
 
 const Header = ({cropSize, weatherDetail, mounted}) => {

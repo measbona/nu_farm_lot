@@ -1,5 +1,4 @@
 import React from 'react';
-import {Alert} from 'react-native';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import {goToSetup} from '../../../navigation/screen';
@@ -31,7 +30,7 @@ const LabelWrapper = styled.View`
 
 const CropLabel = styled.Text`
   font-size: 20px;
-  font-weight: 600;
+  font-weight: bold;
 `;
 
 const ActionWrapper = styled.View`

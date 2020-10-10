@@ -1,4 +1,5 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import Farmer from './components/Farmer';
@@ -11,7 +12,9 @@ export default class GuideScreen extends React.Component {
     const {componentId} = this.props;
 
     return (
-      <Swiper loop={false}>
+      <Swiper
+        loop={false}
+        paginationStyle={Platform.OS === 'ios' ? {bottom: 17} : {bottom: 10}}>
         <Farmer />
         <Humidify />
         <ScheduleWatering />

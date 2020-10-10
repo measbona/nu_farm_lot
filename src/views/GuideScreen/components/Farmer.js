@@ -26,8 +26,8 @@ const TexttWrapper = styled.View`
 `;
 
 const Text = styled.Text`
+  font-weight: bold;
   font-size: ${props => props.size}px;
-  font-weight: ${props => (props.weightFont ? 600 : 500)};
 `;
 
 const ImageWrapper = styled.View`
@@ -54,9 +54,7 @@ export default class Farmer extends React.PureComponent {
           </ImageWrapper>
         </ProfileAndImageWrapper>
         <TexttWrapper>
-          <Text size={23} weightFont>
-            Welcome to NU Farm IoT
-          </Text>
+          <Text size={23}>Welcome to NU Farm IoT</Text>
           <Text size={17}>Enhance farmer with technology</Text>
         </TexttWrapper>
       </Animation>

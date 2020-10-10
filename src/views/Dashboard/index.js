@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import styled from 'styled-components/native';
@@ -31,12 +31,6 @@ const Touchable = styled.TouchableOpacity`
   bottom: ${utils.devices.isNotch() ? 45 : 30}px;
 `;
 
-const Loading = styled.ActivityIndicator`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
 export default class Dashboard extends React.Component {
   state = {
     editAction: false,
@@ -47,7 +41,7 @@ export default class Dashboard extends React.Component {
   };
 
   componentDidMount() {
-    this.handleLocation();
+    this.handleWeather();
     this.fetchCrop();
   }
 
@@ -68,7 +62,7 @@ export default class Dashboard extends React.Component {
     this.setState({allCrops: data});
   };
 
-  handleLocation = async () => {
+  handleWeather = async () => {
     try {
       const location = await this.getLatLngLocation();
 
@@ -112,30 +106,26 @@ export default class Dashboard extends React.Component {
           weatherDetail={weatherDetail}
           mounted={mounted}
         />
-        {mounted ? (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {_.map(allCrops, (crop, key) => {
-              return (
-                <CropCard
-                  key={key}
-                  crop={crop}
-                  onLongPress={value => this.setState({editAction: !value})}
-                  onCropPress={this.handleOnCropPress}
-                  editAction={editAction}
-                  componentId={componentId}
-                />
-              );
-            })}
-          </ScrollView>
-        ) : (
-          <Loading size="large" color={utils.colors.lightGreen} />
-        )}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {_.map(allCrops, (crop, key) => {
+            return (
+              <CropCard
+                key={key}
+                crop={crop}
+                onLongPress={value => this.setState({editAction: !value})}
+                onCropPress={this.handleOnCropPress}
+                editAction={editAction}
+                componentId={componentId}
+              />
+            );
+          })}
+        </ScrollView>
 
         {editAction && (
           <AddButton>
             <Touchable
               activeOpacity={0.5}
-              onPress={() => goToSetup(componentId)}
+              onPress={() => goToSetup(componentId, {action: 'save'})}
               hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
               <MDIcon name="add-circle-outline" size={45} />
             </Touchable>

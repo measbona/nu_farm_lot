@@ -1,4 +1,5 @@
 import React from 'react';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import utils from '../../utils';
 
@@ -22,17 +23,23 @@ const TitleWrapper = styled.View``;
 
 const Title = styled.Text`
   font-size: 20px;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 16px;
   color: ${utils.colors.black};
 `;
 
-const width = utils.devices.isIphoneX ? 260 : 230;
-const height = utils.devices.isIphoneX ? 190 : 210;
+const widthAndroid = 265;
+const heightAndroid = 200;
+const widthIos = utils.devices.isIphoneX ? 255 : 230;
+const heightIos = utils.devices.isIphoneX ? 190 : 210;
 
 const Image = styled.Image`
-  width: ${utils.resizer.getWidth(width)}px;
-  height: ${utils.resizer.getHeight(height)}px;
+  width: ${utils.resizer.getWidth(
+    Platform.OS === 'ios' ? widthIos : widthAndroid,
+  )}px;
+  height: ${utils.resizer.getHeight(
+    Platform.OS === 'ios' ? heightIos : heightAndroid,
+  )}px;
 `;
 
 const Status = styled.View`
