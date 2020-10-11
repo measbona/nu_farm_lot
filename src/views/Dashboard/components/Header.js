@@ -66,7 +66,7 @@ const ForcastText = styled.Text`
   font-weight: bold;
 `;
 
-const Header = ({cropSize, weatherDetail, mounted}) => {
+const Header = ({cropSize, weatherDetail, getWeather}) => {
   const weatherCode = weatherDetail && weatherDetail.weather_code.value;
   const weatherType = utils.weather.getWeatherCode(weatherCode);
   // eslint-disable-next-line prettier/prettier
@@ -78,7 +78,7 @@ const Header = ({cropSize, weatherDetail, mounted}) => {
     <Container style={utils.shadows.cropCardShadow}>
       <Wrapper>
         <WeatherForecast>
-          {mounted ? (
+          {getWeather ? (
             <>
               <Image source={weatherType} />
               <Column>

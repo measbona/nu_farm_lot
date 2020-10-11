@@ -25,7 +25,7 @@ const Text = styled.Text`
 
 const ImageWrapper = styled.View`
   align-items: center;
-  justify-content: center;
+  flex: 0.6;
 `;
 
 const IconWrapper = styled.View`

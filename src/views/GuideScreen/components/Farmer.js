@@ -14,6 +14,7 @@ const Animation = Animatable.createAnimatableComponent(Wrapper);
 
 const ProfileAndImageWrapper = styled.View`
   align-items: center;
+  flex: 0.6;
 `;
 
 const TexttWrapper = styled.View`

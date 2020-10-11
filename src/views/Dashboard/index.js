@@ -1,14 +1,14 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, Alert} from 'react-native';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
-import MDIcon from 'react-native-vector-icons/MaterialIcons';
+// import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 
 import Geolocation from 'react-native-geolocation-service';
 
-import utils from '../../utils';
+// import utils from '../../utils';
 import {showCropDetail, goToSetup} from '../../navigation/screen';
 
 import Header from './components/Header';
@@ -21,20 +21,20 @@ const Wrapper = styled.View`
 
 const DashboardAnimate = Animatable.createAnimatableComponent(Wrapper);
 
-const AddButton = styled.View`
-  align-items: center;
-`;
+// const AddButton = styled.View`
+//   align-items: center;
+// `;
 
-const Touchable = styled.TouchableOpacity`
-  position: absolute;
-  align-items: center;
-  bottom: ${utils.devices.isNotch() ? 45 : 30}px;
-`;
+// const Touchable = styled.TouchableOpacity`
+//   position: absolute;
+//   align-items: center;
+//   bottom: ${utils.devices.isNotch() ? 45 : 30}px;
+// `;
 
 export default class Dashboard extends React.Component {
   state = {
     editAction: false,
-    mounted: false,
+    getWeather: false,
     locationData: null,
     weatherDetail: null,
     allCrops: [],
@@ -56,7 +56,7 @@ export default class Dashboard extends React.Component {
         data[doc.id] = {key: doc.id, ...doc.data()};
       });
     } catch (error) {
-      console.log(error);
+      Alert.alert('Please Check Internet Connection');
     }
 
     this.setState({allCrops: data});
@@ -85,18 +85,14 @@ export default class Dashboard extends React.Component {
       const fetchWeather = await fetch(url);
       const resJson = await fetchWeather.json();
 
-      this.setState({weatherDetail: resJson, mounted: true});
+      this.setState({weatherDetail: resJson, getWeather: true});
     } catch (error) {
-      this.setState({mounted: false});
+      this.setState({getWeather: false});
     }
   };
 
-  handleOnCropPress = crop => {
-    showCropDetail({crop});
-  };
-
   render() {
-    const {editAction, mounted, weatherDetail, allCrops} = this.state;
+    const {editAction, getWeather, weatherDetail, allCrops} = this.state;
     const {componentId} = this.props;
 
     return (
@@ -104,7 +100,7 @@ export default class Dashboard extends React.Component {
         <Header
           cropSize={_.size(allCrops)}
           weatherDetail={weatherDetail}
-          mounted={mounted}
+          getWeather={getWeather}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           {_.map(allCrops, (crop, key) => {
@@ -113,7 +109,7 @@ export default class Dashboard extends React.Component {
                 key={key}
                 crop={crop}
                 onLongPress={value => this.setState({editAction: !value})}
-                onCropPress={this.handleOnCropPress}
+                onCropPress={value => showCropDetail({crop: value})}
                 editAction={editAction}
                 componentId={componentId}
               />
@@ -121,7 +117,7 @@ export default class Dashboard extends React.Component {
           })}
         </ScrollView>
 
-        {editAction && (
+        {/* {editAction && (
           <AddButton>
             <Touchable
               activeOpacity={0.5}
@@ -130,7 +126,7 @@ export default class Dashboard extends React.Component {
               <MDIcon name="add-circle-outline" size={45} />
             </Touchable>
           </AddButton>
-        )}
+        )} */}
       </DashboardAnimate>
     );
   }

@@ -7,6 +7,8 @@ import Humidify from './components/Humidify';
 import ScheduleWatering from './components/ScheduleWatering';
 import SmartAlert from './components/SmartAlert';
 
+import utils from '../../utils';
+
 export default class GuideScreen extends React.Component {
   render() {
     const {componentId} = this.props;
@@ -14,7 +16,13 @@ export default class GuideScreen extends React.Component {
     return (
       <Swiper
         loop={false}
-        paginationStyle={Platform.OS === 'ios' ? {bottom: 17} : {bottom: 10}}>
+        paginationStyle={
+          Platform.OS === 'ios'
+            ? utils.devices.isNotch()
+              ? {bottom: 17}
+              : {bottom: 10}
+            : {bottom: 10}
+        }>
         <Farmer />
         <Humidify />
         <ScheduleWatering />

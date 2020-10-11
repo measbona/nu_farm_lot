@@ -13,6 +13,7 @@ const Wrapper = styled.View`
 
 const ImageWrapper = styled.View`
   align-items: center;
+  flex: 0.6;
 `;
 
 const ContentWrapper = styled.View`

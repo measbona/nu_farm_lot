@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build-android-debug": "cd ./android && ./gradlew clean && cd .. && npx jetifier && cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "build-ios-debug": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "clean": "npm install && cd ios && pod install && cd .."
+    "clean": "npm install && cd ios && pod install && cd ..",
+    "build-android-debug": "cd ./android && ./gradlew clean && cd .. && npx jetifier && cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "build-android-apk": "cd ./android && ./gradlew clean && cd .. && npx jetifier && cd ./android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-firebase/app": "^8.4.3",

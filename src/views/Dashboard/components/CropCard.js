@@ -1,4 +1,5 @@
 import React from 'react';
+import {Alert} from 'react-native';
 import styled from 'styled-components/native';
 import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import {goToSetup} from '../../../navigation/screen';
@@ -53,7 +54,19 @@ const Image = styled.Image`
 
 export default class CropCards extends React.Component {
   onDeletePress = () => {
-    return null;
+    return Alert.alert(
+      'Are you sure to delete?',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+    );
   };
 
   render() {
