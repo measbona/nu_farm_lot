@@ -6,7 +6,7 @@ import {popBack} from '../../../navigation/screen';
 import utils from '../../../utils';
 
 const Button = styled.TouchableOpacity`
-  margin-top: 16px;
+  margin-top: ${utils.devices.devicePaddingTop}px;
   align-items: center;
   flex-direction: row;
 `;

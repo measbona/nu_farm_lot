@@ -3,13 +3,13 @@ import {ScrollView, Alert} from 'react-native';
 import styled from 'styled-components/native';
 import _ from 'lodash';
 import * as Animatable from 'react-native-animatable';
-// import MDIcon from 'react-native-vector-icons/MaterialIcons';
+import MDIcon from 'react-native-vector-icons/MaterialIcons';
 import firestore from '@react-native-firebase/firestore';
 
 import Geolocation from 'react-native-geolocation-service';
 
-// import utils from '../../utils';
-import {showCropDetail, goToSetup} from '../../navigation/screen';
+import utils from '../../utils';
+import {showCropDetail} from '../../navigation/screen';
 
 import Header from './components/Header';
 import CropCard from './components/CropCard';
@@ -21,15 +21,15 @@ const Wrapper = styled.View`
 
 const DashboardAnimate = Animatable.createAnimatableComponent(Wrapper);
 
-// const AddButton = styled.View`
-//   align-items: center;
-// `;
+const AddButton = styled.View`
+  align-items: center;
+`;
 
-// const Touchable = styled.TouchableOpacity`
-//   position: absolute;
-//   align-items: center;
-//   bottom: ${utils.devices.isNotch() ? 45 : 30}px;
-// `;
+const Touchable = styled.TouchableOpacity`
+  position: absolute;
+  align-items: center;
+  bottom: ${utils.devices.isNotch() ? 45 : 30}px;
+`;
 
 export default class Dashboard extends React.Component {
   state = {
@@ -117,16 +117,16 @@ export default class Dashboard extends React.Component {
           })}
         </ScrollView>
 
-        {/* {editAction && (
+        {editAction && (
           <AddButton>
             <Touchable
               activeOpacity={0.5}
-              onPress={() => goToSetup(componentId, {action: 'save'})}
+              onPress={() => this.setState({editAction: false})}
               hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
-              <MDIcon name="add-circle-outline" size={45} />
+              <MDIcon name="highlight-off" size={45} />
             </Touchable>
           </AddButton>
-        )} */}
+        )}
       </DashboardAnimate>
     );
   }
