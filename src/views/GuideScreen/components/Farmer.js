@@ -33,14 +33,14 @@ const Text = styled.Text`
 
 const ImageWrapper = styled.View`
   border-radius: 360px;
-  padding: ${utils.resizer.getWidth(200)}px;
+  padding: ${utils.resizer.getWidth(290)}px;
   background-color: ${utils.colors.orange};
 `;
 
 const Image = styled.Image`
   aspect-ratio: 1;
-  width: ${utils.resizer.getWidth(630)}px;
-  height: ${utils.resizer.getHeight(630)}px;
+  width: ${utils.resizer.getWidth(500)}px;
+  height: ${utils.resizer.getHeight(500)}px;
 `;
 
 export default class Farmer extends React.PureComponent {
