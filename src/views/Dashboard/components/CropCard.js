@@ -54,6 +54,8 @@ const Image = styled.Image`
 
 export default class CropCards extends React.Component {
   onDeletePress = () => {
+    const {onDelete, crop} = this.props;
+
     return Alert.alert(
       'Are you sure to delete?',
       '',
@@ -63,7 +65,7 @@ export default class CropCards extends React.Component {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        {text: 'OK', onPress: () => onDelete(crop.key)},
       ],
       {cancelable: false},
     );
@@ -76,6 +78,7 @@ export default class CropCards extends React.Component {
       onCropPress,
       crop,
       componentId,
+      onEdit,
     } = this.props;
     const image =
       {uri: crop.image_url} ||
@@ -94,7 +97,9 @@ export default class CropCards extends React.Component {
               <ActionWrapper>
                 <Touchable
                   activeOpacity={0.5}
-                  onPress={() => goToSetup(componentId, {action: 'edit', crop})}
+                  onPress={() =>
+                    goToSetup(componentId, {action: 'edit', crop, onEdit})
+                  }
                   hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}>
                   <MDIcon name="edit" size={30} />
                 </Touchable>

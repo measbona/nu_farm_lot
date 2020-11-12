@@ -43,7 +43,10 @@ export default class GuideScreen extends React.Component {
   };
 
   accessPermission = async () => {
-    const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    const result =
+      Platform.OS === 'ios'
+        ? await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+        : await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
 
     switch (result) {
       case RESULTS.UNAVAILABLE:

@@ -146,12 +146,18 @@ export default class Setup extends React.PureComponent {
   };
 
   onSave = async () => {
-    const {cropImage, cropName} = this.state;
-    const {crop, componentId, action} = this.props;
+    const {cropImage, cropName, cropUri} = this.state;
+    const {crop, componentId, action, onEdit} = this.props;
 
     this.setState({loading: true});
     const dbRef = firestore().collection('crops');
     const imageRef = storage().ref(`crop_images/${cropName}`);
+
+    const data = {
+      key: crop.key,
+      cropName: cropName,
+      cropUri: cropUri,
+    };
 
     try {
       if (action === 'edit') {
@@ -169,8 +175,10 @@ export default class Setup extends React.PureComponent {
             .doc(crop.key)
             .update({name: cropName, image_url: getImageUrl});
           this.setState({cropUri: getImageUrl});
+          onEdit(data);
         } else {
           await dbRef.doc(crop.key).update({name: cropName});
+          onEdit(data);
         }
       } else {
         const uploadUri =

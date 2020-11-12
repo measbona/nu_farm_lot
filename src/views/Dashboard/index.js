@@ -91,6 +91,25 @@ export default class Dashboard extends React.Component {
     }
   };
 
+  onDelete = key => {
+    const {allCrops} = this.state;
+
+    this.setState({allCrops: _.omit(allCrops, key)});
+  };
+
+  onEdit = data => {
+    const {allCrops} = this.state;
+    const {key, cropName, cropUri} = data;
+
+    const crops = allCrops;
+    const crop = crops[key];
+
+    crop.name = cropName;
+    crop.image_url = cropUri;
+
+    this.setState({allCrops: crops});
+  };
+
   render() {
     const {editAction, getWeather, weatherDetail, allCrops} = this.state;
     const {componentId} = this.props;
@@ -110,6 +129,8 @@ export default class Dashboard extends React.Component {
                 crop={crop}
                 onLongPress={value => this.setState({editAction: !value})}
                 onCropPress={value => showCropDetail({crop: value})}
+                onDelete={this.onDelete}
+                onEdit={this.onEdit}
                 editAction={editAction}
                 componentId={componentId}
               />
