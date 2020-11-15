@@ -10,7 +10,7 @@ import {
 import AndroidOpenSettings from 'react-native-android-open-settings';
 
 import Farmer from './components/Farmer';
-import Humidify from './components/Humidify';
+import Humidity from './components/Humidity';
 import ScheduleWatering from './components/ScheduleWatering';
 import SmartAlert from './components/SmartAlert';
 
@@ -108,7 +108,7 @@ export default class GuideScreen extends React.Component {
               : {bottom: 10}
           }>
           <Farmer />
-          <Humidify />
+          <Humidity />
           <ScheduleWatering />
           <SmartAlert componentId={componentId} />
         </Swiper>

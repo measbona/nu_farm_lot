@@ -55,7 +55,7 @@ export default class CropDetail extends React.Component {
       <ContentWrapper>
         <Section>
           <TitleWrapper>
-            <Title>Humandity Detail :</Title>
+            <Title>Humidity Detail :</Title>
           </TitleWrapper>
           <Status>
             <Image
@@ -66,7 +66,7 @@ export default class CropDetail extends React.Component {
               color={utils.colors.activate}
               unFieldCollor={utils.colors.lightActivate}
               max={40}
-              min={crop.humandity.temperature}
+              min={crop.humidity.temperature}
             />
           </Status>
           <Status>
@@ -78,7 +78,7 @@ export default class CropDetail extends React.Component {
               color={utils.colors.carrot}
               unFieldCollor={utils.colors.lightCarrot}
               max={100}
-              min={crop.humandity.water_volume}
+              min={crop.humidity.water_volume}
             />
           </Status>
           <Status>
@@ -90,7 +90,7 @@ export default class CropDetail extends React.Component {
               color={utils.colors.carrot}
               unFieldCollor={utils.colors.lightCarrot}
               max={1}
-              min={crop.humandity.water_capacity}
+              min={crop.humidity.water_capacity}
             />
           </Status>
         </Section>

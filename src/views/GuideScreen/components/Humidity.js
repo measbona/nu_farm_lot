@@ -41,7 +41,7 @@ const Image = styled.Image`
   height: ${utils.resizer.getHeight(550)}px;
 `;
 
-export default class Humidify extends React.PureComponent {
+export default class Humidity extends React.PureComponent {
   render() {
     return (
       <Container>
@@ -61,7 +61,7 @@ export default class Humidify extends React.PureComponent {
           </IconWrapper>
         </ImageWrapper>
         <TextWrapper>
-          <Text size={23}>Detect your farm's humidify,</Text>
+          <Text size={23}>Detect your farm's humidity,</Text>
           <Text size={23}>temperature and flood</Text>
           <Text size={17}>In just a few simple steps</Text>
         </TextWrapper>
