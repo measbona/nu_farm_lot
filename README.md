@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="401" height="345" src="https://firebasestorage.googleapis.com/v0/b/nu-farm-iot.appspot.com/o/Logo.png?alt=media&token=385f5e97-3823-46aa-8ed5-db8cc4ed9a4a">
+  <img src="https://firebasestorage.googleapis.com/v0/b/nu-farm-iot.appspot.com/o/Logo.png?alt=media&token=385f5e97-3823-46aa-8ed5-db8cc4ed9a4a">
 </p>
 # NU Farm IoT
  **NU Farm IoT** is and innovation project that us internet to enable comunication between agriculture machines and the farm itself.  
