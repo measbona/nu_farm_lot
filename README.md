@@ -1,7 +1,7 @@
 <p align="center">
-  <img width="460" height="300" src="https://firebasestorage.googleapis.com/v0/b/nu-farm-iot.appspot.com/o/Github%20Logo.png?alt=media&token=bda97ef8-7c16-4527-ad7e-5caae8e364e3">
-  # NU Farm IoT
+  <img width="401" height="345" src="https://firebasestorage.googleapis.com/v0/b/nu-farm-iot.appspot.com/o/Logo.png?alt=media&token=385f5e97-3823-46aa-8ed5-db8cc4ed9a4a">
 </p>
+# NU Farm IoT
  **NU Farm IoT** is and innovation project that us internet to enable comunication between agriculture machines and the farm itself.  
  
   We aim to help farmer with the power of internet by making the farm and machines work automatically by themselvs.  
